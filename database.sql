@@ -3,28 +3,30 @@ CREATE DATABASE LOAN_MATCHER;
 CREATE TABLE CLIENT
     (
         CEmail             VARCHAR(20)         NOT NULL,
-        Fname              VARCHAR(15),          
-        Lname              VARCHAR(15),
+        Fname              VARCHAR(15)         NOT NULL,
+        Lname              VARCHAR(15)         NOT NULL,
         Credit             INT,
-        CPassword          VARCHAR,
+        CPassword          VARCHAR             NOT NULL,
         CLocation          VARCHAR,
         DOB/Establishment  DATE,
         CPhone             CHAR(10),
         Financial_details  VARCHAR,
-        PRIMARY KEY(CEmail)
+        PRIMARY KEY(CEmail),
+        CONSTRAINT CPW CHECK(LENGTH(CPassword) >= 8 AND CPassword ~ '^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=\-{}\[\]:;"''<>,.?/]).+$')
     );
 
 CREATE TABLE LOAN_PROVIDER
     (
         LEmail             VARCHAR(20)         NOT NULL,
-        Fname              VARCHAR(15),
-        Lname              VARCHAR(15),
+        Fname              VARCHAR(15)         NOT NULL,
+        Lname              VARCHAR(15)         NOT NULL,
         Terms              VARCHAR,
-        LPassword          VARCHAR,
+        LPassword          VARCHAR             NOT NULL,
         LLocation          VARCHAR,
         LPhone             CHAR(10),
         LicenseNo          CHAR(10),
-        PRIMARY KEY(LEmail)
+        PRIMARY KEY(LEmail),
+        CONSTRAINT LPW CHECK(LENGTH(LPassword) >= AND LPassword ~ '^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=\-{}\[\]:;"''<>,.?/]).+$')
     );
 
 CREATE TABLE LOAN_POST
