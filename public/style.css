@@ -21,11 +21,20 @@ body {
 .logo {
     font-size: 2rem;
     font-weight: bold;
+    text-decoration: none;
     z-index: 1;
 }
   
-  .logo:hover {
-    cursor: default;
+/* Hover effect for the logo */
+.logo:hover {
+    cursor: pointer;
+    color: #4b8e1f; /* Change the color on hover */
+}
+
+/* Remove the default anchor link styles (visited state) */
+.logo:visited {
+    color: rgb(177, 216, 183);
+    text-decoration: none; /* Prevent underline on visit */
 }
 
 .background {
@@ -49,6 +58,20 @@ body {
     to {
         opacity: 1;
     }
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-out {
+    animation: fadeOut 1s ease-in-out forwards;
 }
 
 .background {
@@ -83,13 +106,13 @@ body {
     justify-content: center; /* Center vertically */
 }
 
-h1 {
+/* h1 {
     font-size: 2.5em;
     color: #f4f0f0;
     margin-bottom: 20px;
     text-transform: none;
     letter-spacing: 2px;
-}
+} */
 
 nav ul {
     display: flex; /* Set navigation to be horizontal */
@@ -122,7 +145,7 @@ footer {
     left: 50%; /* Horizontally center */
     transform: translateX(-50%); /* Adjust to truly center */
     font-size: 0.9em;
-    color: #f8f8f8;
+    color: #4b4b4b;
     text-align: center;
     z-index: 1; /* Ensure it stays above the background */
 }
@@ -154,4 +177,54 @@ footer {
     max-width: 1100px; /* Limit paragraph width for readability */
     color: #fffeec; /* Light gray text color */
     z-index: 1;
+}
+
+.signup .container {
+    position:absolute;
+    top: 50%; /* Center vertically */
+    left: 30%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for centering */
+    max-width: 300px; /* Optional: Define a maximum width */
+    margin: 0 auto; /* Optional: For horizontal centering in other scenarios */
+    padding: 20px; /* Optional: Add inner spacing */
+    background: rgba(177, 216, 183, 0.95); /* Optional: Semi-transparent background */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
+    border-radius: 8px; /* Optional: Rounded corners */
+    display: flex; /* Optional: For content layout inside */
+    flex-direction: column; /* Optional: Align items vertically */
+    justify-content: center; /* Optional: Align items within container */
+    align-items: center; /* Optional: Center items h */
+}
+
+.signup h1 {
+    position: absolute;
+    top: 35%;
+    left: 42.6%;
+    align-items: center; /* Optional: Center items h */
+    animation: fadeIn 2s ease-in-out forwards;
+}
+
+.login h1 {
+    position: absolute;
+    top: 35%;
+    left: 44%;
+    align-items: center; /* Optional: Center items h */
+    animation: fadeIn 2s ease-in-out forwards;
+}
+
+.login .container {
+    position:absolute;
+    top: 50%; /* Center vertically */
+    left: 32.5%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for centering */
+    max-width: 400px; /* Optional: Define a maximum width */
+    margin: 0 auto; /* Optional: For horizontal centering in other scenarios */
+    padding: 20px; /* Optional: Add inner spacing */
+    background: rgba(177, 216, 183, 0.95); /* Optional: Semi-transparent background */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
+    border-radius: 8px; /* Optional: Rounded corners */
+    display: flex; /* Optional: For content layout inside */
+    flex-direction: column; /* Optional: Align items vertically */
+    justify-content: center; /* Optional: Align items within container */
+    align-items: center; /* Optional: Center items h */
 }
