@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
 /* Resetting margins and paddings */
 * {
     margin: 0;
@@ -11,7 +13,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 100;
     font-style: normal;    
-    color: #333;
+    color: rgb(177, 216, 183);
     margin: 35px;
     padding: 0;
 }
@@ -19,7 +21,6 @@ body {
 .logo {
     font-size: 2rem;
     font-weight: bold;
-    color: rgb(177, 216, 183);
     z-index: 1;
 }
   
@@ -35,7 +36,7 @@ body {
     height: 100%;
     background: url('./assets/pexels-photo-4963433.webp') no-repeat center center fixed;
     background-size: cover;
-    background-position: center calc(90px); /* Move the image down by 50px */
+    background-position: center calc(110px); /* Move the image down by 50px */
     opacity: 0; /* Start invisible */
     animation: fadeIn 2s ease-in-out forwards; /* Fade-in animation for background */
     z-index: 0;
@@ -71,7 +72,7 @@ body {
     text-align: center; /* Ensure text aligns to the center horizontally */
     position: absolute;
     right: 100px; /* Move UI to the right side */
-    top: 50%;
+    top: 7%;
     transform: translateY(-50%);
     z-index: 1; /* Ensure UI is above the background */
     opacity: 0; /* Start invisible */
@@ -126,3 +127,31 @@ footer {
     z-index: 1; /* Ensure it stays above the background */
 }
 
+.about {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Center text inside the container */
+    height: 80vh; /* Full viewport height */
+    /* background: rgba(0, 0, 0, 0.5); Semi-transparent background overlay */
+    padding: 20px; /* Add padding for spacing */
+    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); Subtle shadow for visual effect */
+    border-radius: 12px; /* Rounded corners */
+}
+
+.about h1 {
+    font-size: 2.5rem; /* Larger font for headings */
+    margin-bottom: 20px; /* Spacing below the heading */
+    color: #fffeec; /* Highlight the heading with green */
+    z-index: 1;
+}
+
+.about p {
+    font-size: 1.5rem; /* Comfortable reading size */
+    font-weight: bolder;
+    line-height: 1.6; /* Adjust spacing between lines */
+    max-width: 1100px; /* Limit paragraph width for readability */
+    color: #fffeec; /* Light gray text color */
+    z-index: 1;
+}
