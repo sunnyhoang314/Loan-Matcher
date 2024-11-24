@@ -151,80 +151,69 @@ footer {
 }
 
 .about {
-    display: flex; /* Use flexbox for alignment */
-    flex-direction: column; /* Stack items vertically */
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-    text-align: center; /* Center text inside the container */
-    height: 80vh; /* Full viewport height */
-    /* background: rgba(0, 0, 0, 0.5); Semi-transparent background overlay */
-    padding: 20px; /* Add padding for spacing */
-    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); Subtle shadow for visual effect */
-    border-radius: 12px; /* Rounded corners */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .about h1 {
-    font-size: 2.5rem; /* Larger font for headings */
-    margin-bottom: 20px; /* Spacing below the heading */
-    color: #fffeec; /* Highlight the heading with green */
+    font-size: clamp(1.5rem, 5vw, 2.5rem); /* Responsive font size */
+    margin-bottom: 20px;
+    color: #fffeec;
     z-index: 1;
 }
 
 .about p {
-    font-size: 1.5rem; /* Comfortable reading size */
+    font-size: clamp(1rem, 3vw, 1.5rem); /* Responsive font size */
     font-weight: bolder;
-    line-height: 1.6; /* Adjust spacing between lines */
-    max-width: 1100px; /* Limit paragraph width for readability */
-    color: #fffeec; /* Light gray text color */
+    line-height: 1.6;
+    max-width: min(1100px, 90%); /* Responsive width */
+    color: #fffeec;
     z-index: 1;
+    margin: 0 auto;
 }
 
-.signup .container {
-    position:absolute;
-    top: 50%; /* Center vertically */
-    left: 30%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for centering */
-    max-width: 300px; /* Optional: Define a maximum width */
-    margin: 0 auto; /* Optional: For horizontal centering in other scenarios */
-    padding: 20px; /* Optional: Add inner spacing */
-    background: rgba(177, 216, 183, 0.95); /* Optional: Semi-transparent background */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
-    border-radius: 8px; /* Optional: Rounded corners */
-    display: flex; /* Optional: For content layout inside */
-    flex-direction: column; /* Optional: Align items vertically */
-    justify-content: center; /* Optional: Align items within container */
-    align-items: center; /* Optional: Center items h */
+.signup .container, .login .container {
+    position: fixed; /* Changed from absolute for better centering */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(400px, 90%); /* Responsive width */
+    padding: 20px;
+    background: rgba(177, 216, 183, 0.95);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
 }
 
-.signup h1 {
-    position: absolute;
+.signup h1, .login h1 {
+    position: fixed; /* Changed from absolute */
     top: 35%;
-    left: 42.6%;
-    align-items: center; /* Optional: Center items h */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    width: 100%;
+    text-align: center;
     animation: fadeIn 2s ease-in-out forwards;
 }
 
-.login h1 {
-    position: absolute;
-    top: 35%;
-    left: 44%;
-    align-items: center; /* Optional: Center items h */
-    animation: fadeIn 2s ease-in-out forwards;
-}
-
-.login .container {
-    position:absolute;
-    top: 50%; /* Center vertically */
-    left: 32.5%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for centering */
-    max-width: 400px; /* Optional: Define a maximum width */
-    margin: 0 auto; /* Optional: For horizontal centering in other scenarios */
-    padding: 20px; /* Optional: Add inner spacing */
-    background: rgba(177, 216, 183, 0.95); /* Optional: Semi-transparent background */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Subtle shadow */
-    border-radius: 8px; /* Optional: Rounded corners */
-    display: flex; /* Optional: For content layout inside */
-    flex-direction: column; /* Optional: Align items vertically */
-    justify-content: center; /* Optional: Align items within container */
-    align-items: center; /* Optional: Center items h */
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .signup h1, .login h1 {
+        top: 25%; /* Adjust position for smaller screens */
+    }
+    
+    .signup .container, .login .container {
+        padding: 15px;
+    }
 }
