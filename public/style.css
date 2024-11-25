@@ -43,7 +43,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('./assets/pexels-photo-4963433.webp') no-repeat center center fixed;
+    background: url('./assets/handshake.jpg') no-repeat center center fixed;
     background-size: cover;
     background-position: center calc(110px); /* Move the image down by 50px */
     opacity: 0; /* Start invisible */
@@ -207,7 +207,7 @@ footer {
     animation: fadeIn 2s ease-in-out forwards;
 }
 
-.client-login {
+.client-login, .client-signup {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -216,16 +216,17 @@ footer {
     padding: 20px;
     width: 300px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     text-align: center;
     animation: fadeIn 2s ease-in-out forwards;
 }
 
-.client-login form {
+.client-login form, .client-signup form {
     padding-top: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    font-weight: 500;
 }
 
 .client-login input[type="text"],
