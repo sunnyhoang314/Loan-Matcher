@@ -207,7 +207,7 @@ footer {
     animation: fadeIn 2s ease-in-out forwards;
 }
 
-.client-login, .client-signup {
+.client-login, .client-signup, .loan-provider-signup {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -221,7 +221,7 @@ footer {
     animation: fadeIn 2s ease-in-out forwards;
 }
 
-.client-login form, .client-signup form {
+.client-login form, .client-signup form, .loan-provider-signup form {
     padding-top: 10px;
     display: flex;
     flex-direction: column;
