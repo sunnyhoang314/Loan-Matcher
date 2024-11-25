@@ -228,3 +228,8 @@ footer {
     justify-content: center; /* Optional: Align items within container */
     align-items: center; /* Optional: Center items h */
 }
+
+input {
+    display: block;
+    margin-top: 0em;
+}
