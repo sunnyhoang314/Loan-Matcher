@@ -8,7 +8,7 @@
 }
 
 body {
-    overflow: hidden; /* Prevent scrollbars */
+    /* overflow: hidden; Prevent scrollbars */
     font-family: "Raleway", sans-serif;
     font-optical-sizing: auto;
     font-weight: 100;
@@ -16,6 +16,9 @@ body {
     color: rgb(177, 216, 183);
     margin: 35px;
     padding: 0;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
 }
 
 .logo {
@@ -140,7 +143,7 @@ nav ul li a:hover {
 }
 
 footer {
-    position: absolute; /* Position relative to the page */
+    position: fixed; /* Position relative to the page */
     bottom: 10px; /* Space from the bottom edge */
     left: 50%; /* Horizontally center */
     transform: translateX(-50%); /* Adjust to truly center */
@@ -217,8 +220,12 @@ footer {
     width: 300px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    text-align: center;
+    text-align:left;
     animation: fadeIn 2s ease-in-out forwards;
+}
+
+.client-signup, .loan-provider-signup {
+    top: 75%;
 }
 
 .client-login form, .client-signup form, .loan-provider-signup form {
@@ -229,8 +236,13 @@ footer {
     font-weight: 500;
 }
 
-.client-login input[type="text"],
-.client-login input[type="password"] {
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="date"],
+input[type="tel"], 
+input[type="email"],
+input[type="number"] {
     padding: 10px;
     width: 100%;
     border: 1px solid #ccc;
@@ -238,7 +250,7 @@ footer {
     font-size: 16px;
 }
 
-.client-login input[type="submit"] {
+input[type="submit"] {
     padding: 10px;
     font-size: 16px;
     background-color: rgba(177, 216, 183, 0.95);
@@ -248,7 +260,7 @@ footer {
     cursor: pointer;
 }
 
-.client-login input[type="submit"]:hover {
+input[type="submit"]:hover {
     background-color: rgba(157, 196, 163, 0.95); /* Slightly darker hover effect */
 }
 
