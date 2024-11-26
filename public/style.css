@@ -31,7 +31,7 @@ body {
 /* Hover effect for the logo */
 .logo:hover {
     cursor: pointer;
-    color: #4b8e1f; /* Change the color on hover */
+    /* color: #4b8e1f; Change the color on hover */
 }
 
 /* Remove the default anchor link styles (visited state) */
@@ -46,7 +46,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('./assets/handshake.jpg') no-repeat center center fixed;
+    background: url('./assets/Handshake3-scaled.jpg') no-repeat center center fixed;
+    /* background-color: #76b947; */
     background-size: cover;
     background-position: center calc(110px); /* Move the image down by 50px */
     opacity: 0; /* Start invisible */
@@ -98,7 +99,7 @@ body {
     text-align: center; /* Ensure text aligns to the center horizontally */
     position: absolute;
     right: 100px; /* Move UI to the right side */
-    top: 7%;
+    top: 6%;
     transform: translateY(-50%);
     z-index: 1; /* Ensure UI is above the background */
     opacity: 0; /* Start invisible */
