@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 // Configuration for SQL Server connection
 var con = mysql.createConnection({
     host: 'localhost',
-    user: process.env.DB_USER,         // Replace with your SQL Server username
-    password: process.env.DB_PASSWORD,     // Replace with your SQL Server password
-    database: 'loan_matcher',     // Replace with your database name
+    user: process.env.DB_USER,         
+    password: process.env.DB_PASSWORD,     
+    database: 'loan_matcher',     
 });
 
 // Connect to the database

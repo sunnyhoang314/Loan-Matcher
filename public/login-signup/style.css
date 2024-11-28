@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-
+:root{
+    --txtGreen: #76b947;
+}
 /* Resetting margins and paddings */
 * {
     margin: 0;
@@ -13,7 +15,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 100;
     font-style: normal;    
-    color: rgb(177, 216, 183);
+    color: var(--txtGreen);
     margin: 35px;
     padding: 0;
     flex-direction: column;
@@ -36,7 +38,7 @@ body {
 
 /* Remove the default anchor link styles (visited state) */
 .logo:visited {
-    color: rgb(177, 216, 183);
+    color: var(--txtGreen);
     text-decoration: none; /* Prevent underline on visit */
 }
 
@@ -254,7 +256,7 @@ input[type="number"] {
 input[type="submit"] {
     padding: 10px;
     font-size: 16px;
-    background-color: rgba(177, 216, 183, 0.95);
+    background-color: var(--txtGreen);
     color: #fff;
     border: none;
     border-radius: 4px;

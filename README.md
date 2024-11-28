@@ -48,5 +48,5 @@ Check MySQL server status if connection fails.
 
 
 ## Code References:
-Code related to setting up Node.js and Express was referenced from the following YouTube tutorial:
+Code related to setting up using Node.js and Express was referenced from the following YouTube tutorial:
 https://www.youtube.com/watch?v=I6mDdLldhFw&list=PL8CsGVwzS6rMec0tyOo3RaOr0cw2Fi7oW&index=4
