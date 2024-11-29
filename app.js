@@ -41,8 +41,18 @@ const server = http.createServer(app);
 //   })
 // );
 
+
+// Redirect root URL to /signup-login/index.html
+app.get('/', (req, res) => {
+    res.redirect('/login-signup/index.html');
+  });
+
+// Integrate the signup router
+app.use('/signup',signup)
+
 // Starts the Express server on port 3000.
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
-
-app.use('/signup',signup)
+server.listen(PORT, () => {
+    const link = `http://localhost:${PORT}`;
+    console.log(`Server is running on ${link}`);
+});
