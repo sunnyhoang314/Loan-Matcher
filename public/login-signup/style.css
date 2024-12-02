@@ -267,6 +267,86 @@ input[type="submit"]:hover {
     background-color: rgba(157, 196, 163, 0.95); /* Slightly darker hover effect */
 }
 
+.navbar {
+    padding-right: 15px; 
+    padding-left: 15px;
+}
+
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+}
+
+ /* Sidebar styles */
+ .sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Initially hidden */
+    width: 300px;
+    height: 100%;
+    background-color: #f4f4f4;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.sidebar.open {
+    right: 0; /* Slide in */
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--txtGreen);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.sidebar ul li button:hover {
+    background-color: rgba(157, 196, 163, 0.95);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 999;
+}
+
+.overlay.show {
+    display: block;
+}
+
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
     .signup h1, .login h1 {
