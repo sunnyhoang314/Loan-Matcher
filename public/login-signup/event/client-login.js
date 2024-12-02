@@ -1,16 +1,16 @@
 
-document.getElementById("ClientSignupForm").addEventListener("submit", (event) => {
+document.getElementById("ClientLoginForm").addEventListener("submit", (event) => {
 
     event.preventDefault();
 
-    const signupForm = document.getElementById("ClientSignupForm");
-    const formData = new FormData(signupForm); // Automatically collects all the form data, including the file
+    const loginForm = document.getElementById("ClientLoginForm");
+    const formData = new FormData(loginForm); // Automatically collects all the form data, including the file
     console.log("Form Data:");
     for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
     }
 
-    fetch("/signup/client", {
+    fetch("/login/client", {
         method: "POST",
         body: formData,  // Send the formData instead of JSON
     })
@@ -24,13 +24,7 @@ document.getElementById("ClientSignupForm").addEventListener("submit", (event) =
                 });
             }else {
                 // Redirect or handle success
-                Swal.fire({
-                    icon: "success",
-                    title: "Registration Successful",
-                    text: "You have registered successfully!",
-                }).then(() => {
-                    window.location.href = 'client-login.html';
-                });
+                window.location.href = "/login.html";
             }
         })
         .catch((error) => {

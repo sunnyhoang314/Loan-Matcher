@@ -10,13 +10,17 @@
     <a href="login.html" class="logo">Loan Matcher</a>
     <div class="client-login">
         <h1>Client Login</h1>
-        <form action="myFormScript.php" method="post" id="loginForm">
-            Username: <input type="text">
-            Password: <input type="password">
+        <form id="ClientLoginForm">
+            Username: <input type="text" name = "email">
+            Password: <input type="password" name = "password">
             <input type="submit">
         </form>
+        <!-- SweetAlert2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.css" rel="stylesheet">
     </div>
     <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
-    <script src="script.js"></script>   
+    <!-- SweetAlert2 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
+    <script src="event/client-login.js"></script>   
 </body>
 </html>

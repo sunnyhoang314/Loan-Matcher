@@ -61,3 +61,20 @@ module.exports.signupClient = async function (firstName, lastName, email, phone,
 
 
 
+module.exports.loginClient = async function (email, password) {
+    try {
+        // Check if the email and password match
+        const query = 'SELECT * FROM client WHERE CEmail = ? AND CPassword = ?';
+        const result = await con.promise().query(query, [email, password]);
+        if (result[0].length > 0) {
+            console.log('Client logged in successfully');
+            return { status: 'success'};
+        } else {
+            console.log('Invalid email or password');
+            return { status: 'error', message: 'Invalid email or password'};
+        }
+    } catch (err) {
+        console.error('Error occurred during login:', err);
+        return { status: 'error', message: 'Error occurred during login'};
+    }
+};
