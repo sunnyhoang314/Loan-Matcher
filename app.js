@@ -32,33 +32,36 @@ app.use(cookie());
 //create server for app
 const server = http.createServer(app);
 
-// Middleware for handling sessions
 app.use(
-  session({
-    secret: 'dksajfkdj', // Replace with a secure secret key
-    resave: false,
-    saveUninitialized: true,
-  })
+    session({
+        secret: 'your-secret-key',
+        resave: false,
+        saveUninitialized: true,
+        rolling: true, // Refresh cookie expiration after every request
+        cookie: { maxAge: 30 * 60 * 1000 }, // 30 minutes
+    })
 );
 
 
-// Redirect root URL to /signup-login/index.html
-app.get('/', loggedIn,(req, res) => {
-    if(!req.session.loggedIn) return res.send ('You are not logged in');
+
+// Routes
+app.get('/', loggedIn, (req, res) => {
+    if (req.session.Cemail) {
+        res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render client main
+    } else if (req.session.Lemail) {
+        res.render('loan-provider-main', { email: req.session.Lemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render loan provider main
+    }
 });
 
 app.get('/client-main', loggedIn, (req, res) => { 
-    res.render('client-main', { 
-        email: req.session.email
-    }); // Pass dynamic data to the template
+    res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render client main
+});
+
+app.get('/loan-provider-main', loggedIn, (req, res) => { 
+    res.render('loan-provider-main', { email: req.session.Lemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render loan provider main
 });
 
 
-app.get('/loan-provider-main', loggedIn, (req, res) => {
-    res.render('loan-provider-main', { 
-        email: req.session.email 
-    }); // Pass dynamic data to the template
-});
 
 // Integrate the routers
 app.use('/signup',signup);

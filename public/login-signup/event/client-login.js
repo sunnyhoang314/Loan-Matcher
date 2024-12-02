@@ -24,7 +24,7 @@ document.getElementById("ClientLoginForm").addEventListener("submit", (event) =>
                 });
             }else {
                 // Redirect or handle success
-                window.location.href = "/login.html";
+                window.location.href = "/client-main";
             }
         })
         .catch((error) => {

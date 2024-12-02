@@ -21,6 +21,7 @@ con.connect(function (err) {
     }
 });
 
+
 module.exports.signupClient = async function (firstName, lastName, email, phone, location, DOBorEST, creditScore, password) {
     try {
 
