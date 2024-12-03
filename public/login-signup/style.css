@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 :root{
     --txtGreen: #76b947;
+    --backgroundColor: #c8ff94;
 }
 /* Resetting margins and paddings */
 * {
@@ -95,7 +96,7 @@ body {
     max-width: 400px;
     margin: 0;
     padding: 20px;
-    background: rgba(177, 216, 183, 0.95); /* Semi-transparent background */
+    background: var(--backgroundColor); /* Semi-transparent background */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     text-align: center; /* Ensure text aligns to the center horizontally */
@@ -193,7 +194,7 @@ footer {
     transform: translate(-50%, -50%);
     width: min(400px, 90%); /* Responsive width */
     padding: 20px;
-    background: rgba(177, 216, 183, 0.95);
+    background: var(--backgroundColor);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     display: flex;
@@ -264,7 +265,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: rgba(157, 196, 163, 0.95); /* Slightly darker hover effect */
+    background-color: var(--backgroundColor); /* Slightly darker hover effect */
 }
 
 .signup .background, .login .background {
@@ -332,7 +333,7 @@ li {
 }
 
 .sidebar ul li button:hover {
-    background-color: rgba(157, 196, 163, 0.95);
+    background-color: var(--backgroundColor);
 }
 
 /* Overlay */
@@ -350,6 +351,54 @@ li {
 .overlay.show {
     display: block;
 }
+
+/* Notification Popup Styling */
+.notification-popup {
+    position: fixed;
+    top: 13%;
+    right: 5%;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    display: none;
+    z-index: 1000;
+}
+
+.notification-popup h3 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.notification-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.notification-popup ul li {
+    margin: 5px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 500;
+}
+
+.notification-popup button {
+    margin-top: 10px;
+    background-color: var(--txtGreen);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.notification-popup button:hover {
+    background-color: var(--backgroundColor);
+}
+
 
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {

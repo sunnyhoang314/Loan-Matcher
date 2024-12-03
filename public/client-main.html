@@ -15,6 +15,7 @@
                 <div class="container">
                     <ul>
                         <li><a href="client-post.html">Post</a></li>
+                        <li><a href="#" id="notif-button">Notifications</a></li>
                         <li><a href="#" id="settings-button">Settings</a></li>
                     </ul>
                 </div>
@@ -31,6 +32,16 @@
     </div>
     <!--Overlay-->
     <div class="overlay" id="sidebar-overlay"></div>
+    <!--Notifications-->
+    <div class="notification-popup" id="notification-popup">
+        <h3>Notifications</h3>
+        <ul>
+            <li>New message from Alice</li>
+            <li>Your loan application has been approved!</li>
+            <li>Reminder: Complete your profile.</li>
+        </ul>
+        <button onclick="closeNotification()">Close</button>
+    </div>
     <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
     <script src="./login-signup/script.js"></script>
 </body>

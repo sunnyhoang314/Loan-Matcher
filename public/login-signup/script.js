@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function () {
     links.forEach(function (link) {
         link.addEventListener('click', function (event) {
             // Prevent fade-out on Settings button
-            if (link.id === 'settings-button') {
+            if (link.id === 'settings-button' || link.id === 'notif-button') {
                 return; // Do nothing for settings
             }
 
@@ -77,3 +77,26 @@ function showLogout() {
         }
     });
 }
+
+// JavaScript for Notification Popup
+const notifButton = document.getElementById('notif-button');
+const notificationPopup = document.getElementById('notification-popup');
+
+// Show notification popup
+notifButton.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevent the click event from propagating to the document
+    notificationPopup.style.display = 'block';
+});
+
+// Close notification popup when clicking outside of it
+document.addEventListener('click', (event) => {
+    if (!notificationPopup.contains(event.target) && event.target !== notifButton) {
+        notificationPopup.style.display = 'none';
+    }
+});
+
+// Close notification popup explicitly with a button inside the popup
+function closeNotification() {
+    notificationPopup.style.display = 'none';
+}
+
