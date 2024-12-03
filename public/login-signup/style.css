@@ -267,6 +267,10 @@ input[type="submit"]:hover {
     background-color: rgba(157, 196, 163, 0.95); /* Slightly darker hover effect */
 }
 
+.signup .background, .login .background {
+    filter: blur(4px);
+}
+
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
     .signup h1, .login h1 {
