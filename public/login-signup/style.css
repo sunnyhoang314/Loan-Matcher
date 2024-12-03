@@ -38,7 +38,7 @@ body {
 }
 
 /* Remove the default anchor link styles (visited state) */
-.logo:visited {
+.logo:link, .logo:visited{
     color: var(--txtGreen);
     text-decoration: none; /* Prevent underline on visit */
 }
@@ -101,7 +101,7 @@ body {
     border-radius: 8px;
     text-align: center; /* Ensure text aligns to the center horizontally */
     position: absolute;
-    right: 100px; /* Move UI to the right side */
+    right: 20px; /* Move UI to the right side */
     top: 6%;
     transform: translateY(-50%);
     z-index: 1; /* Ensure UI is above the background */

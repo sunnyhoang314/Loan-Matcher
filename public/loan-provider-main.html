@@ -3,22 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Main</title>
+    <title>Loan Main</title>
+    <link rel="stylesheet" href="./login-signup/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <h1>Client Main Page</h1>
-    <ul>
-        <li>View client dashboard</li>
-        <li>Create loan post</li>
-        <li>Settings
-            <ul>
-                <li>Edit client information</li>
-                <li><a href="index.html">Logout</a></li>
-            </ul>
-        </li>
-        <li>Accept/decline loan offer</li>
-        <li>View loan provider contact info</li>
-    </ul>
-    <a href="login.html">Back to Login</a>
+    <!--Navbar-->
+    <nav class="navbar">
+        <div class="navdiv">
+            <div class="logo"><aonclick="showLogout()">Loan Matcher</a></div>
+                <div class="container">
+                    <ul>
+                        <li><a href="loan-provider-post.html">Post</a></li>
+                        <li><a href="#" id="notif-button">Notifications</a></li>
+                        <li><a href="#" id="settings-button">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--Sidebar-->
+    <div class="sidebar" id="settings-sidebar">
+        <h2>Settings</h2>
+        <ul>
+            <li><button onclick="editUserInfo()">Edit Info</button></li>
+            <li><button onclick="showLogout()">Logout</button></li>
+        </ul>
+    </div>
+    <!--Overlay-->
+    <div class="overlay" id="sidebar-overlay"></div>
+    <!--Notifications-->
+    <div class="notification-popup" id="notification-popup">
+        <h3>Notifications</h3>
+        <ul>
+            <li>New message from Alice</li>
+            <li>Your loan application has been approved!</li>
+            <li>Reminder: Complete your profile.</li>
+        </ul>
+        <button onclick="closeNotification()">Close</button>
+    </div>
+    <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
+    <script src="./login-signup/script.js"></script>
 </body>
 </html>
