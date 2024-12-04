@@ -71,12 +71,23 @@ function showLogout() {
     }).then((result) => {
         if (result.isConfirmed) {
             console.log('User confirmed logout');
-            window.location.href = '/logout';
+            fetch('/logout', {
+                method: 'POST',
+            }).then(response => {
+                if (response.status === 200) {
+                    window.location.href = '/';  // Redirect after successful logout
+                } else {
+                    console.error('Logout failed');
+                }
+            }).catch(() => {
+                console.log('Error during logout');
+            });
         } else {
             console.log('User canceled logout');
         }
     });
 }
+
 
 // JavaScript for Notification Popup
 const notifButton = document.getElementById('notif-button');

@@ -32,28 +32,21 @@ app.use(cookie());
 //create server for app
 const server = http.createServer(app);
 
+// Configure session middleware
 app.use(
     session({
-        secret: 'your-secret-key',
-        resave: false,
-        saveUninitialized: true,
-        rolling: true, // Refresh cookie expiration after every request
-        cookie: { maxAge: 30 * 60 * 1000 }, // 30 minutes
+        secret: 'your-secret-key', // A secret key for signing the session ID cookie
+        resave: false, // Don't save session if it was not modified
+        saveUninitialized: true, // Save a session that is uninitialized (default: false)
+        rolling: true, // Refresh cookie expiration on every request
+        cookie: { 
+            maxAge: 30 * 60 * 1000, // 30 minutes (in milliseconds)
+            secure: false, // Set to true if using HTTPS, false for HTTP
+            httpOnly: true // Prevent client-side JavaScript from accessing the cookie
+        }
     })
 );
 
-
-
-//Routes
-// app.get('/', loggedIn, (req, res) => {
-//     console.log(req.session);
-//     console.log("executed");
-//     if (req.session?.Cemail) {
-//         res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render client main
-//     } else if (req.session?.Lemail) {
-//         res.render('loan-provider-main', { email: req.session.Lemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render loan provider main
-//     }
-// });
 
 
 app.use(express.static('./public'));
@@ -71,6 +64,23 @@ app.get('/loan-provider-main', loggedIn, (req, res) => {
 // Integrate the routers
 app.use('/signup',signup);
 app.use('/login', login);
+
+app.post('/logout', (req, res) => {
+    
+    // Destroy the session (this logs the user out)
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).end();
+        }
+        
+        // Clear the session cookie
+        res.clearCookie('connect.sid');
+        
+        // Respond with a success message
+        return res.status(200).end();
+    });
+});
+
 
 // Starts the Express server on port 3000.
 const PORT = 3000;
