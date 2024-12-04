@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 :root{
     --txtGreen: #76b947;
+    --backgroundColor: #c8ff94;
 }
 /* Resetting margins and paddings */
 * {
@@ -37,7 +38,7 @@ body {
 }
 
 /* Remove the default anchor link styles (visited state) */
-.logo:visited {
+.logo:link, .logo:visited{
     color: var(--txtGreen);
     text-decoration: none; /* Prevent underline on visit */
 }
@@ -95,12 +96,12 @@ body {
     max-width: 400px;
     margin: 0;
     padding: 20px;
-    background: rgba(177, 216, 183, 0.95); /* Semi-transparent background */
+    background: var(--backgroundColor); /* Semi-transparent background */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     text-align: center; /* Ensure text aligns to the center horizontally */
     position: absolute;
-    right: 100px; /* Move UI to the right side */
+    right: 20px; /* Move UI to the right side */
     top: 6%;
     transform: translateY(-50%);
     z-index: 1; /* Ensure UI is above the background */
@@ -193,7 +194,7 @@ footer {
     transform: translate(-50%, -50%);
     width: min(400px, 90%); /* Responsive width */
     padding: 20px;
-    background: rgba(177, 216, 183, 0.95);
+    background: var(--backgroundColor);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     display: flex;
@@ -264,8 +265,140 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: rgba(157, 196, 163, 0.95); /* Slightly darker hover effect */
+    background-color: var(--backgroundColor); /* Slightly darker hover effect */
 }
+
+.signup .background, .login .background {
+    filter: blur(4px);
+}
+
+.navbar {
+    padding-right: 15px; 
+    padding-left: 15px;
+}
+
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+}
+
+ /* Sidebar styles */
+ .sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Initially hidden */
+    width: 300px;
+    height: 100%;
+    background-color: #f4f4f4;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.sidebar.open {
+    right: 0; /* Slide in */
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--txtGreen);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.sidebar ul li button:hover {
+    background-color: var(--backgroundColor);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 999;
+}
+
+.overlay.show {
+    display: block;
+}
+
+/* Notification Popup Styling */
+.notification-popup {
+    position: fixed;
+    top: 13%;
+    right: 5%;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    display: none;
+    z-index: 1000;
+}
+
+.notification-popup h3 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.notification-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.notification-popup ul li {
+    margin: 5px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 500;
+}
+
+.notification-popup button {
+    margin-top: 10px;
+    background-color: var(--txtGreen);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.notification-popup button:hover {
+    background-color: var(--backgroundColor);
+}
+
 
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
