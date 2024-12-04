@@ -42,12 +42,12 @@ module.exports.signupClient = async function (firstName, lastName, email, phone,
         }
 
         // Check if the email already exists in the admin table
-        const checkAdminEmailQuery = 'SELECT AEmail FROM admin WHERE AEmail = ?';
-        const adminResult = await con.promise().query(checkAdminEmailQuery, [email]);
-        if (adminResult[0].length > 0) {
-            console.log('Email already exists as an admin.');
-            return { status: 'error', message: 'Email already exists as a admin.' };
-        }
+        // const checkAdminEmailQuery = 'SELECT AEmail FROM admin WHERE AEmail = ?';
+        // const adminResult = await con.promise().query(checkAdminEmailQuery, [email]);
+        // if (adminResult[0].length > 0) {
+        //     console.log('Email already exists as an admin.');
+        //     return { status: 'error', message: 'Email already exists as a admin.' };
+        // }
 
         // Proceed with insertion only if the email doesn't exist in any table
         const insertQuery = 'INSERT INTO client (CEmail, Fname, Lname, CPhone, CLocation, DOB_Establishment, Credit, CPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';

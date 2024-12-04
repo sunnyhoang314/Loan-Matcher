@@ -20,7 +20,7 @@ app.set('views', path.join(__dirname, 'views')); // Directory for templates
 
 
 // Serve static files from the 'public' directory
-app.use(express.static('./public/login-signup'));
+
 
 // Middleware for parsing incoming data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,14 +44,19 @@ app.use(
 
 
 
-// Routes
-app.get('/', loggedIn, (req, res) => {
-    if (req.session.Cemail) {
-        res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render client main
-    } else if (req.session.Lemail) {
-        res.render('loan-provider-main', { email: req.session.Lemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render loan provider main
-    }
-});
+//Routes
+// app.get('/', loggedIn, (req, res) => {
+//     console.log(req.session);
+//     console.log("executed");
+//     if (req.session?.Cemail) {
+//         res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render client main
+//     } else if (req.session?.Lemail) {
+//         res.render('loan-provider-main', { email: req.session.Lemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render loan provider main
+//     }
+// });
+
+
+app.use(express.static('./public'));
 
 app.get('/client-main', loggedIn, (req, res) => { 
     res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render client main

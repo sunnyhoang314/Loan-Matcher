@@ -8,13 +8,12 @@ var con = mysql.createConnection({
 });
 
 const loggedIn = async (req, res, next) => {
+    console.log("Session data:", req.session); // Log the session data
     if (!req.session.loggedIn) {
-        return res.redirect('/');
+        return res.redirect('/index.html');
     }
-
     try {
         if (req.session.Cemail) {
-            console.log("executed");
             const email = req.session.Cemail;
             const query = `SELECT * FROM client WHERE Cemail = ?`;
             const [rows] = await con.promise().query(query,[email]);
@@ -31,7 +30,6 @@ const loggedIn = async (req, res, next) => {
                 req.session.Lname = rows[0].Lname;
             }
         }
-        console.log(req.session.Fname);
         next(); // Call the next middleware only after the queries complete
     } catch (err) {
         console.error('Error executing query:', err);
