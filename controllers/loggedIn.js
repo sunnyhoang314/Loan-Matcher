@@ -8,7 +8,7 @@ var con = mysql.createConnection({
 });
 
 const loggedIn = async (req, res, next) => {
-    console.log("Session data:", req.session); // Log the session data
+    //console.log("Session data:", req.session); // Log the session data
     if (!req.session.loggedIn) {
         return res.redirect('/index.html');
     }
