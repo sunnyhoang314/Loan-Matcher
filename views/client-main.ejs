@@ -15,7 +15,9 @@
             <div class="logo"><a onclick="showLogout()">Loan Matcher</a></div>
                 <div class="container">
                     <ul>
-                        <li><a href="loan-provider-post.html">Post</a></li>
+                        <li><a href="#" id="create-post-link">Create Post</a></li>
+                        <li><a href="#" id="matched-post-link">Matched Posts</a></li>
+                        <li><a href="#" id="accepted-post-link">Accepted Posts</a></li>
                         <li><a href="#" id="notif-button">Notifications</a></li>
                         <li><a href="#" id="settings-button">Settings</a></li>
                     </ul>
@@ -44,6 +46,50 @@
         </ul>
         <button onclick="closeNotification()">Close</button>
     </div>
+    <!--Create post-->
+    <!-- Create Post Pop-Up -->
+    <div class="create-post-popup" id="create-post-popup">
+        <h2>Create a New Post</h2>
+        <form id="post-form">
+            <label for="post-title">Title:</label>
+            <input type="text" id="post-title" name="title" required>
+
+            <label for="max-rate">Maximum Loan Rate (%)</label>
+            <input type="number" id="max-rate" name="max-rate" required>
+
+            <label for="min-term-length">Minumum Term Length</label>
+            <div class="min-term-length">
+                <input type="date" id="min-start-date" placeholder="Start Date" required />
+                <span class="date-separator">to</span>
+                <input type="date" id="min-end-date" placeholder="End Date" required />
+            </div>
+
+            <label for="max-term-length">Maximum Term Length</label>
+            <div class="max-term-length">
+                <input type="date" id="max-start-date" placeholder="Start Date" required />
+                <span class="date-separator">to</span>
+                <input type="date" id="max-end-date" placeholder="End Date" required />
+            </div>
+
+            <label for="post-description">Description:</label>
+            <textarea id="post-description" name="post-description" rows="5" required></textarea>
+            
+            <label for="post-category">Category:</label>
+            <select id="post-category" name="post-category" required>
+                <option value="finance">Finance</option>
+                <option value="real-estate">Real Estate</option>
+                <option value="business">Business</option>
+                <option value="other">Other</option>
+            </select>
+            
+            <label for="post-amount">Amount ($):</label>
+            <input type="number" id="post-amount" name="post-amount" required>
+
+            <button type="submit">Submit</button>
+            <button type="button" id="cancel-post">Cancel</button>
+        </form>
+    </div>
+
     <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
     <script src="/script.js" onerror="this.onerror=null;this.src='../public/script.js';"></script>
 </body>

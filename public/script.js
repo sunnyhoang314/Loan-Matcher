@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function () {
     links.forEach(function (link) {
         link.addEventListener('click', function (event) {
             // Prevent fade-out on Settings button
-            if (link.id === 'settings-button' || link.id === 'notif-button') {
+            if (link.id === 'settings-button' || link.id === 'notif-button' || link.id === 'create-post-link' || link.id === 'matched-post-link' || link.id === 'accepted-post-link') {
                 return; // Do nothing for settings
             }
 
@@ -109,5 +109,33 @@ document.addEventListener('click', (event) => {
 // Close notification popup explicitly with a button inside the popup
 function closeNotification() {
     notificationPopup.style.display = 'none';
+}
+
+// Select elements
+const createPostPopup = document.getElementById('create-post-popup');
+const createPostLink = document.getElementById('create-post-link');
+const cancelPostButton = document.getElementById('cancel-post');
+
+createPostPopup.classList.add('show'); // For showing
+createPostPopup.classList.remove('show'); // For hiding
+
+
+// Show the popup when clicking "Create Post"
+createPostLink.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    console.log("Create Post clicked!"); // Debug log
+    createPostPopup.style.display = 'block';
+    console.log("Popup display set to block");});
+
+// Hide the popup when clicking "Cancel"
+cancelPostButton.addEventListener('click', () => {
+    createPostPopup.style.display = 'none'; // Hide the popup
+});
+
+// Unique Post ID Generator
+function generateUniquePostID() {
+    const timestamp = Date.now().toString(36); // Base-36 encoded timestamp
+    const randomString = Math.random().toString(36).substring(2, 8); // Random alphanumeric string
+    return `POST-${timestamp}-${randomString}`;
 }
 
