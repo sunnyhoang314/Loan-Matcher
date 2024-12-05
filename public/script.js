@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // Loop through each link and add a click event listener
     links.forEach(function (link) {
         link.addEventListener('click', function (event) {
-            // Prevent fade-out on Settings button
+            // Prevent fade-out on tab buttons
             if (link.id === 'settings-button' || link.id === 'notif-button' || link.id === 'create-post-link' || link.id === 'matched-post-link' || link.id === 'accepted-post-link') {
                 return; // Do nothing for settings
             }
@@ -125,6 +125,8 @@ createPostLink.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent default link behavior
     console.log("Create Post clicked!"); // Debug log
     createPostPopup.style.display = 'block';
+    closeMatchedPostPopup();
+    closeAcceptedPostPopup();
     console.log("Popup display set to block");});
 
 // Hide the popup when clicking "Cancel"
@@ -139,3 +141,42 @@ function generateUniquePostID() {
     return `POST-${timestamp}-${randomString}`;
 }
 
+const matchedPostLink = document.getElementById('matched-post-link');
+const matchedPostPopup = document.getElementById('matched-post-popup');
+const acceptedPostLink = document.getElementById('accepted-post-link');
+const acceptedPostPopup = document.getElementById('accepted-post-popup');
+
+// Function to close Create Post Popup
+function closeCreatePostPopup() {
+    createPostPopup.style.display = 'none'; // Hide the Create Post popup
+}
+
+function closeMatchedPostPopup() {
+    matchedPostPopup.style.display = 'none';
+}
+
+function closeAcceptedPostPopup() {
+    acceptedPostPopup.style.display = 'none';
+}
+
+// Event listener for Matched Posts button
+matchedPostLink.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    closeCreatePostPopup(); // Close the Create Post popup
+    closeAcceptedPostPopup();
+    matchedPostPopup.style.display = 'block';
+    console.log('Matched Posts tab opened'); // Debug log
+    // Add logic to show Matched Posts tab content
+    // Example: Show matched posts and hide other tabs
+});
+
+// Event listener for Accepted Posts button
+acceptedPostLink.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    closeCreatePostPopup(); // Close the Create Post popup
+    closeMatchedPostPopup();
+    acceptedPostPopup.style.display = 'block';
+    console.log('Accepted Posts tab opened'); // Debug log
+    // Add logic to show Accepted Posts tab content
+    // Example: Show accepted posts and hide other tabs
+});

@@ -296,7 +296,7 @@ li {
     width: 300px;
     height: 100%;
     background-color: #f4f4f4;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); */
     transition: right 0.3s ease-in-out;
     z-index: 1000;
     padding: 20px;
@@ -364,7 +364,7 @@ li {
     border-radius: 8px;
     width: 300px;
     display: none;
-    z-index: 1000;
+    z-index: 998;
 }
 
 .notification-popup h3 {
@@ -399,17 +399,17 @@ li {
     background-color: var(--backgroundColor);
 }
 
-#create-post-popup {
+.create-post-popup {
     position: fixed;
     top: 100px; /* Adjust to leave space for the top navigation bar */
     left: 0;
     width: 100%;
     height: calc(100% - 50px); /* Full height minus the navbar */
     background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
-    z-index: 1000; /* Ensure it's on top */
+    z-index: 997; /* Ensure it's on top */
     display: none; /* Initially hidden */
     overflow-y: auto; /* Enable scrolling if content exceeds height */
-    padding: 20px;
+    padding-bottom: 80px;
 }
 /* 
 .create-post-popup.show {
@@ -427,6 +427,42 @@ li {
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+.matched-post-popup {
+    position: fixed;
+    top: 100px; /* Adjust to leave space for the top navigation bar */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px); /* Full height minus the navbar */
+    background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+    z-index: 997; /* Ensure it's on top */
+    display: none; /* Initially hidden */
+    overflow-y: auto; /* Enable scrolling if content exceeds height */
+    padding-bottom: 80px;
+}
+
+.matched-post-popup p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.accepted-post-popup {
+    position: fixed;
+    top: 100px; /* Adjust to leave space for the top navigation bar */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px); /* Full height minus the navbar */
+    background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+    z-index: 997; /* Ensure it's on top */
+    display: block; /* Initially hidden */
+    overflow-y: auto; /* Enable scrolling if content exceeds height */
+    padding-bottom: 80px;
+}
+
+.accepted-post-popup p {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 /* Media query for smaller screens */
