@@ -165,9 +165,6 @@ matchedPostLink.addEventListener('click', (e) => {
     closeCreatePostPopup(); // Close the Create Post popup
     closeAcceptedPostPopup();
     matchedPostPopup.style.display = 'block';
-    console.log('Matched Posts tab opened'); // Debug log
-    // Add logic to show Matched Posts tab content
-    // Example: Show matched posts and hide other tabs
 });
 
 // Event listener for Accepted Posts button

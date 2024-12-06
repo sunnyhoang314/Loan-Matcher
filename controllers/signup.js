@@ -71,4 +71,55 @@ router.post(
     }
 );
 
+router.post(
+    '/loan-provider', 
+    upload.none(),
+    [
+    //Validation rules
+    check('firstName').isAlpha().withMessage('Enter a valid first name'),
+    check('lastName').isAlpha().withMessage('Enter a valid last name'),
+    check('email').isEmail().withMessage('Enter a valid email'),
+    check('license').isInt().withMessage('Enter a valid license number'),
+    check("password")
+        .isLength({ min: 8 })
+        .withMessage('Password must be at least 4 characters long'),
+    check('confirmPassword')
+        .custom((value, { req }) => {
+            // Compare password and confirmPassword
+            if (value !== req.body.password) {
+                throw new Error('Password confirmation does not match password');
+            }
+            return true;
+        }),
+    ],
+    async function(req, res) {
+        // console.log(req.body); // Log the request body
+        // console.log(req.headers);
+        // Handle validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                status: "error",
+                error: errors.array()[0].msg, // Return the first error message
+            });
+        }
+
+        const { firstName, lastName, email, phone, location, license, password} = req.body;
+        const result = await db.signupLoanProvider(firstName, lastName, email, phone, location, license, password);
+
+        if (result.status === 'error') {
+            return res.status(400).json({
+                status: "error",
+                error: result.message, 
+            });
+        }
+
+        // Respond with success message
+        res.json({
+            status: "success",
+            message: "User registered successfully!",
+        });
+    }
+);
+
 module.exports = router;
