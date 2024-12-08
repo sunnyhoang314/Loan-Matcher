@@ -177,3 +177,200 @@ acceptedPostLink.addEventListener('click', (e) => {
     // Add logic to show Accepted Posts tab content
     // Example: Show accepted posts and hide other tabs
 });
+
+// Placeholder posts
+const posts = [
+    { 
+        title: "Loan Offer A", 
+        mintermlength: "01/01/2024 to 01/01/2025", 
+        maxtermlength: "01/01/2024 to 12/31/2026",
+        description: "Low interest rate loan for small businesses.", 
+        minloanamount: 10000, 
+        mininterestrate: 5, 
+        category: "Business", 
+        matched: true,  // Initially available for action
+        accepted: false,  // Not accepted initially
+        posterAccepted: false,  // Poster hasn't accepted yet
+        contactInfo: { email: "posterA@example.com", phone: "1234567890" }
+    },
+    { 
+        title: "Loan Offer B", 
+        mintermlength: "02/15/2024 to 02/15/2025", 
+        maxtermlength: "02/15/2024 to 02/15/2027",
+        description: "Flexible term loan for real estate projects.", 
+        minloanamount: 50000, 
+        mininterestrate: 3.5, 
+        category: "Real Estate", 
+        matched: true,  // Initially available for action
+        accepted: false,  // Not accepted initially
+        posterAccepted: false,  // Poster hasn't accepted yet
+        contactInfo: { email: "posterb@example.com", phone: "0987654321" }
+    },
+    { 
+        title: "Loan Offer C",
+        mintermlength: "03/01/2024 to 03/01/2025", 
+        maxtermlength: "03/01/2024 to 03/01/2026", 
+        description: "Short-term loan for startups.", 
+        minloanamount: 20000, 
+        mininterestratee: 4, 
+        category: "Other", 
+        matched: true,  // Initially available for action
+        accepted: false,  // Not accepted initially
+        posterAccepted: true,  // Poster hasn't accepted yet
+        contactInfo: { email: "posterc@example.com", phone: "6942066669" }
+    },
+    { 
+        title: "Loan Offer D", 
+        mintermlength: "05/01/2024 to 05/01/2025", 
+        maxtermlength: "05/01/2024 to 05/01/2026",
+        description: "Educational loan with no collateral.", 
+        minloanamount: 15000, 
+        mininterestrate: 4.2, 
+        category: "Other", 
+        matched: true,  // Initially available for action
+        accepted: false,  // Not accepted initially
+        posterAccepted: true,  // Poster hasn't accepted yet
+        contactInfo: { email: "posterA@example.com", phone: "5588420123" }
+    }
+];
+
+function renderMatchedPosts() {
+    const matchedPostsContainer = document.getElementById('matched-posts-container');
+    matchedPostsContainer.innerHTML = ''; // Clear container
+
+    // Filter matched posts
+    const matchedPosts = posts.filter(post => post.matched);
+
+    if (matchedPosts.length === 0) {
+        matchedPostsContainer.innerHTML = '<h2>You don\'t have any matched posts. Perhaps you didn\'t create a post?</h2>';
+    } else {
+        matchedPosts.forEach((post, index) => {
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.innerHTML = `
+                <h3>${post.title}</h3>
+                <p><strong>Minimum Interest Rate: </strong>${post.mininterestrate}%</p>
+                <p><strong>Minimum Term Length: </strong>${post.mintermlength}</p>
+                <p><strong>Maximum Term Length: </strong>${post.maxtermlength}</p>
+                <p>${post.description}</p>
+                <p><strong>Category: </strong>${post.category}</p>
+                <p><strong>Minimum Loan Amount: </strong>$${post.minloanamount}</p>
+                <div class="post-actions">
+                    <button class="accept-button" data-index="${index}">Accept</button>
+                    <button class="decline-button" data-index="${index}">Decline</button>
+                </div>
+            `;
+            matchedPostsContainer.appendChild(postElement);
+        });
+
+        // Add event listeners for buttons
+        const acceptButtons = document.querySelectorAll('.accept-button');
+        const declineButtons = document.querySelectorAll('.decline-button');
+
+        acceptButtons.forEach(button => {
+            button.addEventListener('click', (e) => handleAccept(e.target.dataset.index));
+        });
+
+        declineButtons.forEach(button => {
+            button.addEventListener('click', (e) => handleDecline(e.target.dataset.index));
+        });
+    }
+}
+
+const acceptedPosts = [];  // Store accepted posts here
+
+function handleAccept(index) {
+    const post = posts[index];
+
+    // Mark the post as accepted
+    post.accepted = true;
+    post.matched = false;  // Remove it from the matched list
+
+    // Log which post is accepted
+    console.log(`Accepting post at index: ${index}, Post Title: ${post.title}`);
+
+    // Add to the accepted posts list
+    acceptedPosts.push(post);
+
+    // Remove the accepted post from the array
+    posts.splice(index, 1);  // This removes the post at the given index
+
+    // Refresh matched and accepted posts
+    renderMatchedPosts();
+    renderAcceptedPosts();
+}
+
+
+function handleDecline(index) {
+    const post = posts[index];
+    post.accepted = false;  // Keep as not accepted
+    post.matched = false;  // Remove from the matched section
+    posts.splice(index, 1);  // This removes the post at the given index
+    alert(`You declined the post: ${post.title}`);
+    renderMatchedPosts();  // Refresh matched posts
+}
+
+// Render posts on page load
+document.addEventListener('DOMContentLoaded', () => {
+    renderMatchedPosts();
+});
+
+document.getElementById('matched-post-link').addEventListener('click', () => {
+    // Hide other tabs
+    document.getElementById('create-post-popup').style.display = 'none';
+    document.getElementById('accepted-post-popup').style.display = 'none'; // Example for another tab
+
+    // Show the matched posts tab
+    const matchedPostsTab = document.getElementById('matched-posts-popup');
+    matchedPostsTab.style.display = 'block';
+    renderMatchedPosts(); // Refresh the posts if necessary
+});
+
+function renderAcceptedPosts() {
+    const acceptedPostsContainer = document.getElementById('accepted-posts-container');
+    acceptedPostsContainer.innerHTML = ''; // Clear container
+
+    // Check if there are any accepted posts
+    if (acceptedPosts.length === 0) {
+        acceptedPostsContainer.innerHTML = '<p>You don\'t have any accepted posts.</p>';
+    } else {
+        acceptedPosts.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.innerHTML = `
+                <h3>${post.title}</h3>
+                <p><strong>Minimum Interest Rate: </strong>${post.mininterestrate}%</p>
+                <p><strong>Minimum Term Length: </strong>${post.mintermlength}</p>
+                <p><strong>Maximum Term Length: </strong>${post.maxtermlength}</p>
+                <p>${post.description}</p>
+                <p><strong>Category: </strong>${post.category}</p>
+                <p><strong>Minimum Loan Amount: </strong>$${post.minloanamount}</p>
+                <div class="post-actions">
+                    ${post.posterAccepted
+                        ? `<button class="view-contact-button" onclick="viewContact('${post.contactInfo.email}', '${post.contactInfo.phone}')">View Contact Information</button>`
+                        : '<p>Acceptance Pending</p>'
+                    }
+                </div>
+            `;
+            acceptedPostsContainer.appendChild(postElement);
+        });
+    }
+}
+
+document.getElementById('accepted-post-link').addEventListener('click', () => {
+    // Hide other tabs
+    document.getElementById('create-post-popup').style.display = 'none';
+    document.getElementById('matched-posts-popup').style.display = 'none';
+
+    // Show the accepted posts tab
+    const acceptedPostsTab = document.getElementById('accepted-post-popup');
+    acceptedPostsTab.style.display = 'block';  // Show the accepted posts popup
+    renderAcceptedPosts(); // Refresh the posts if necessary
+});
+
+
+
+// Function to view contact information
+function viewContact(email, phone) {
+    alert(`Contact Information:\nEmail: ${email}\nPhone: ${phone}`);
+}
