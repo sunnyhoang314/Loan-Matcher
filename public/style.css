@@ -465,6 +465,97 @@ li {
     margin-bottom: 20px;
 }
 
+/* Styling for the Matched Posts tab */
+#matched-posts-popup {
+    display: none; /* Hidden by default, toggle this to show */
+    padding: 20px;
+}
+
+/* Posts container styling */
+.matched-posts-container {
+    max-height: 400px; /* Adjust based on your design */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Individual post styling */
+.post {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.post h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.post p {
+    margin: 5px 0;
+}
+
+.post-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center; /* Centers the buttons horizontally */
+    gap: 10px; /* Adds spacing between buttons */
+}
+
+.accept-button,
+.decline-button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 100px; /* Optional: Ensures uniform button width */
+    text-align: center;
+}
+
+.accept-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.accept-button:hover {
+    background-color: #45a049;
+}
+
+.decline-button {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.decline-button:hover {
+    background-color: #ff0000;
+}
+
+#accepted-posts-popup {
+    display: none;
+    padding: 20px;
+}
+
+.view-contact-button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--txtGreen);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.view-contact-button:hover {
+    background-color: var(--backgroundColor);
+}
+
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
     .signup h1, .login h1 {
