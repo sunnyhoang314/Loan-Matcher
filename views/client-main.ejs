@@ -18,7 +18,7 @@
                         <li><a href="#" id="create-post-link">Create Post</a></li>
                         <li><a href="#" id="matched-post-link">Matched Posts</a></li>
                         <li><a href="#" id="accepted-post-link">Accepted Posts</a></li>
-                        <li><a href="#" id="notif-button">Notifications</a></li>
+                        <li><a href="#" id="notif-button"></a></li> <!--Do not comment out or delete, it breaks the website -->
                         <li><a href="#" id="settings-button">Settings</a></li>
                     </ul>
                 </div>
@@ -28,7 +28,7 @@
     <!--Sidebar-->
     <div class="sidebar" id="settings-sidebar">
         <h2>Settings</h2>
-        <h4>Welcome <%=Fname%></h4>
+        <h4>Welcome <%=email%></h4>
         <ul>
             <!-- <li><button onclick="editUserInfo()">Edit Info</button></li> -->
             <li><button onclick="showLogout()">Logout</button></li>
@@ -37,7 +37,7 @@
     <!--Overlay-->
     <div class="overlay" id="sidebar-overlay"></div>
     <!--Notifications-->
-    <div class="notification-popup" id="notification-popup">
+    <!-- <div class="notification-popup" id="notification-popup">
         <h3>Notifications</h3>
         <ul>
             <li>New message from Alice</li>
@@ -45,7 +45,7 @@
             <li>Reminder: Complete your profile.</li>
         </ul>
         <button onclick="closeNotification()">Close</button>
-    </div>
+    </div> -->
     <!--Create post-->
     <!-- Create Post Pop-Up -->
     <div class="create-post-popup" id="create-post-popup">
@@ -98,7 +98,7 @@
     
     <div class="accepted-post-popup" id="accepted-post-popup">
         <h2>Accepted Posts</h2>
-        <div id="accepted-posts-container" class="matched-posts-container">
+        <div id="accepted-posts-container" class="accepted-posts-container">
             <!-- Accepted posts will be dynamically inserted here -->
         </div>
     </div>

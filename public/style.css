@@ -229,10 +229,10 @@ footer {
 }
 
 .client-signup, .loan-provider-signup {
-    top: 75%;
+    top: 50%;
 }
 
-.client-login form, .client-signup form, .loan-provider-signup form {
+.client-login form, .client-signup form, .loan-provider-signup form, .loan-provider-login form {
     padding-top: 10px;
     display: flex;
     flex-direction: column;
@@ -353,7 +353,7 @@ li {
 }
 
 /* Notification Popup Styling */
-.notification-popup {
+/* .notification-popup {
     position: fixed;
     top: 13%;
     right: 5%;
@@ -397,7 +397,7 @@ li {
 
 .notification-popup button:hover {
     background-color: var(--backgroundColor);
-}
+} */
 
 .create-post-popup {
     position: fixed;
@@ -429,40 +429,47 @@ li {
     gap: 15px;
 }
 
-.matched-post-popup {
+.matched-post-popup,
+.accepted-post-popup {
     position: fixed;
-    top: 100px; /* Adjust to leave space for the top navigation bar */
-    left: 0;
-    width: 100%;
+    top: 600px; /* Adjust to leave space for the top navigation bar */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Adjust the position to ensure exact centering */
+    width: 80%;
     height: calc(100% - 50px); /* Full height minus the navbar */
     background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
     z-index: 997; /* Ensure it's on top */
     display: block; /* Initially hidden */
     overflow-y: auto; /* Enable scrolling if content exceeds height */
     padding-bottom: 80px;
+    align-items: center;
 }
 
 .matched-post-popup p {
     text-align: center;
     margin-bottom: 20px;
+    font-weight: 500;
 }
 
 .accepted-post-popup {
     position: fixed;
-    top: 100px; /* Adjust to leave space for the top navigation bar */
-    left: 0;
-    width: 100%;
+    top: 600px; /* Adjust to leave space for the top navigation bar */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Adjust the position to ensure exact centering */
+    width: 80%;
     height: calc(100% - 50px); /* Full height minus the navbar */
     background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
     z-index: 997; /* Ensure it's on top */
     display: none; /* Initially hidden */
     overflow-y: auto; /* Enable scrolling if content exceeds height */
     padding-bottom: 80px;
+    align-items: center;
 }
 
 .accepted-post-popup p {
     text-align: center;
     margin-bottom: 20px;
+    font-weight: 500;
 }
 
 /* Styling for the Matched Posts tab */
@@ -472,8 +479,9 @@ li {
 }
 
 /* Posts container styling */
-.matched-posts-container {
-    max-height: 400px; /* Adjust based on your design */
+.matched-posts-container, 
+.accepted-posts-container {
+    max-height: 600px; /* Adjust based on your design */
     overflow-y: auto; /* Enable vertical scrolling */
     border: 1px solid #ccc;
     padding: 10px;

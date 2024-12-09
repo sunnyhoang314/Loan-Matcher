@@ -58,7 +58,7 @@ function closeSidebar() {
 // Example actions for sidebar buttons
 function editUserInfo() {
     closeSidebar();
-    window.location.href = 'edit-client.html'; // Redirect to edit-client.html
+    window.location.href = '/edit-client'; // Redirect to edit-client.html
 }
 
 function showLogout() {
@@ -212,7 +212,7 @@ const posts = [
         maxtermlength: "03/01/2024 to 03/01/2026", 
         description: "Short-term loan for startups.", 
         minloanamount: 20000, 
-        mininterestratee: 4, 
+        mininterestrate: 4, 
         category: "Other", 
         matched: true,  // Initially available for action
         accepted: false,  // Not accepted initially
@@ -277,8 +277,6 @@ function renderMatchedPosts() {
     }
 }
 
-const acceptedPosts = [];  // Store accepted posts here
-
 function handleAccept(index) {
     const post = posts[index];
 
@@ -326,14 +324,17 @@ document.getElementById('matched-post-link').addEventListener('click', () => {
     renderMatchedPosts(); // Refresh the posts if necessary
 });
 
+const acceptedPosts = [];  // Store accepted posts here
+
 function renderAcceptedPosts() {
     const acceptedPostsContainer = document.getElementById('accepted-posts-container');
-    acceptedPostsContainer.innerHTML = ''; // Clear container
+    acceptedPostsContainer.innerHTML = ''; // Clear the container
 
     // Check if there are any accepted posts
     if (acceptedPosts.length === 0) {
-        acceptedPostsContainer.innerHTML = '<p>You don\'t have any accepted posts.</p>';
+        acceptedPostsContainer.innerHTML = '<h2>You don\'t have any accepted posts.</h2>';
     } else {
+        // Iterate through acceptedPosts and create post elements
         acceptedPosts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.classList.add('post');
