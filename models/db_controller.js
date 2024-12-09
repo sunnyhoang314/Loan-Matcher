@@ -150,16 +150,45 @@ module.exports.createLoanPost = async (post) => {
             Cemail,
         } = post;
 
-        const query = `INSERT INTO loan_post (PTitle, Description, MaxRate, MinTermStart, MinTermEnd, MaxTermStart,MaxTermEnd, PStatus, LType, Desired_amt, CEmail)
+        const query = `INSERT INTO loan_post (PTitle, Description, MaxRate, MinTermStart, MinTermEnd, MaxTermStart, MaxTermEnd, PStatus, LType, Desired_amt, CEmail)
                     VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?)`;
 
-        const values = [title, description, maxRate, minStartDate, minEndDate, maxStartDate,maxEndDate, category, maxAmount, Cemail];
+        const values = [title, description, maxRate, minStartDate, minEndDate, maxStartDate, maxEndDate, category, maxAmount, Cemail];
 
         await con.promise().query(query, values);
         return { status: "success" };
     } catch (err) {
         console.error("Database Error:", err);
         return { status: "error", message: "Failed to save loan post to database." };
+    }
+};
+
+module.exports.createLoanOffer = async (post) => {
+    try {
+        const {
+            title,
+            minRate,
+            minStartDate,
+            minEndDate,
+            maxStartDate,
+            maxEndDate,
+            description,
+            category,
+            minAmount,
+            maxAmount,
+            Lemail,
+        } = post;
+
+        const query = `INSERT INTO loan_offer (OName, Description, MinRate, MinTermStart, MinTermEnd, MaxTermStart, MaxTermEnd, OStatus, LType, Min_amt, Max_amt, LEmail)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?, ?)`;
+
+        const values = [title, description, minRate, minStartDate, minEndDate, maxStartDate, maxEndDate, category, minAmount, maxAmount, Lemail];
+
+        await con.promise().query(query, values);
+        return { status: "success" };
+    } catch (err) {
+        console.error("Database Error:", err);
+        return { status: "error", message: "Failed to save loan offer to database." };
     }
 };
 

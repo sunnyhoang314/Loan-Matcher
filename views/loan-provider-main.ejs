@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <!-- <h1>Welcome <%=Fname%> <%=Lname%> email: <%=email%></h1> -->
     <!--Navbar-->
     <nav class="navbar">
         <div class="navdiv">
@@ -48,49 +49,48 @@
     <!--Create post-->
     <!-- Create Post Pop-Up -->
     <div class="create-post-popup" id="create-post-popup">
-        <h2>Create a New Post</h2>
-        <form id="post-form">
+        <h2>Create a New Offer</h2>
+        <form id="offer-form">
             <label for="post-title">Title:</label>
             <input type="text" id="post-title" name="title" required>
-
+    
             <label for="min-rate">Minimum Interest Rate (%)</label>
             <input type="number" id="min-rate" name="min-rate" required>
-
-            <label for="min-term-length">Minumum Term Length</label>
+    
+            <label for="min-term-length">Minimum Term Length</label>
             <div class="min-term-length">
-                <input type="date" id="min-start-date" placeholder="Start Date" required />
+                <input type="date" id="min-start-date" name="min-start-date" placeholder="Start Date" required />
                 <span class="date-separator">to</span>
-                <input type="date" id="min-end-date" placeholder="End Date" required />
+                <input type="date" id="min-end-date" name="min-end-date" placeholder="End Date" required />
             </div>
-
+    
             <label for="max-term-length">Maximum Term Length</label>
             <div class="max-term-length">
-                <input type="date" id="max-start-date" placeholder="Start Date" required />
+                <input type="date" id="max-start-date" name="max-start-date" placeholder="Start Date" required />
                 <span class="date-separator">to</span>
-                <input type="date" id="max-end-date" placeholder="End Date" required />
+                <input type="date" id="max-end-date" name="max-end-date" placeholder="End Date" required />
             </div>
-
+    
             <label for="post-description">Description:</label>
-            <textarea id="post-description" name="post-description" rows="5" required></textarea>
+            <textarea id="post-description" name="description" rows="5" required></textarea>
             
             <label for="post-category">Category:</label>
-            <select id="post-category" name="post-category" required>
+            <select id="post-category" name="category" required>
                 <option value="finance">Finance</option>
                 <option value="real-estate">Real Estate</option>
                 <option value="business">Business</option>
                 <option value="other">Other</option>
             </select>
             
-            <label for="post-amount">Minimum mount ($):</label>
-            <input type="number" id="min-post-amount" name="min-post-amount" required>
-
-            <label for="post-amount">Maximum mount ($):</label>
-            <input type="number" id="max-post-amount" name="max-post-amount" required>
-
+            <label for="post-min-amount">Minimum Loan Amount ($):</label>
+            <input type="number" id="post-min-amount" name="min-amount" required>
+            <label for="post-max-amount">Maximum Loan Amount ($):</label>
+            <input type="number" id="post-max-amount" name="max-amount" required>
+    
             <button type="submit">Submit</button>
             <button type="button" id="cancel-post">Cancel</button>
         </form>
-    </div>
+    </div>    
     <div class="matched-post-popup" id="matched-post-popup">
         <h2>Matched Posts</h2>
         <div id="matched-posts-container" class="matched-posts-container">
@@ -104,7 +104,9 @@
             <!-- Accepted posts will be dynamically inserted here -->
         </div>
     </div>
+    
     <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
     <script src="/script.js" onerror="this.onerror=null;this.src='../public/script.js';"></script>
+    <script src="/event/createOfferEvent.js"></script>
 </body>
 </html>

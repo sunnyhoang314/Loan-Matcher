@@ -12,6 +12,7 @@ var signup =  require('./controllers/signup');
 var login = require('./controllers/login');
 const loggedIn = require('./controllers/loggedIn');
 var createPost = require('./controllers/createPost');
+var createOffer = require('./controllers/createOffer');
 
 var app = express();//Creates an instance of the Express app. This is your web server, which will handle requests and send responses.
 
@@ -73,6 +74,7 @@ app.get('/loan-provider-main', loggedIn, (req, res) => {
 app.use('/signup',signup);
 app.use('/login', login);
 app.use('/client', createPost);
+app.use('/loan-provider', createOffer);
 
 app.post('/logout', (req, res) => {
     
