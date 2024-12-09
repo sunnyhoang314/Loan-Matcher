@@ -11,6 +11,7 @@ var db = require('./models/db_controller');
 var signup =  require('./controllers/signup');
 var login = require('./controllers/login');
 const loggedIn = require('./controllers/loggedIn');
+var createPost = require('./controllers/createPost');
 
 var app = express();//Creates an instance of the Express app. This is your web server, which will handle requests and send responses.
 
@@ -64,6 +65,7 @@ app.get('/loan-provider-main', loggedIn, (req, res) => {
 // Integrate the routers
 app.use('/signup',signup);
 app.use('/login', login);
+app.use('/client', createPost);
 
 app.post('/logout', (req, res) => {
     

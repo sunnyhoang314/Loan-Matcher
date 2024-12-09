@@ -10,14 +10,14 @@ CREATE TABLE CLIENT
         CEmail             VARCHAR(50)         NOT NULL,
         Fname              VARCHAR(15)         NOT NULL,
         Lname              VARCHAR(15)         NOT NULL,
-        Credit             INT                 NOT NULL,
+        Credit             INT                 ,
         CPassword          VARCHAR(255)        NOT NULL,
-        CLocation          VARCHAR(255)        NOT NULL,
-        DOB_Establishment  DATE                NOT NULL,
-        CPhone             CHAR(20)            NOT NULL,            
-        Financial_details  VARCHAR(255)        NOT NULL,
+        CLocation          VARCHAR(255)        ,
+        DOB_Establishment  DATE                ,
+        CPhone             CHAR(20)            ,            
+        Financial_details  VARCHAR(255)        ,
         CONSTRAINT CPK PRIMARY KEY(CEmail),
-        CONSTRAINT CPW CHECK(LENGTH(CPassword) >= 8 AND CPassword ~ '^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=\-{}\[\]:;"''<>,.?/]).+$')
+        CONSTRAINT CPW CHECK(LENGTH(CPassword) >= 8)
     );
 
 -- Create the LOAN_PROVIDER table
@@ -26,13 +26,13 @@ CREATE TABLE LOAN_PROVIDER
         LEmail             VARCHAR(50)         NOT NULL,
         Fname              VARCHAR(15)         NOT NULL,
         Lname              VARCHAR(15)         NOT NULL,
-        Terms              VARCHAR(255)        NOT NULL,
+        Terms              VARCHAR(255)        ,
         LPassword          VARCHAR(255)        NOT NULL,
-        LLocation          VARCHAR(255)        NOT NULL,
-        LPhone             CHAR(20)            NOT NULL,
-        LicenseNo          CHAR(10)           NOT NULL,
+        LLocation          VARCHAR(255)        ,
+        LPhone             CHAR(20)            ,
+        LicenseNo          CHAR(10)            ,
         CONSTRAINT LPK PRIMARY KEY(LEmail),
-        CONSTRAINT LPW CHECK(LENGTH(LPassword) >= 8 AND LPassword ~ '^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=\-{}\[\]:;"''<>,.?/]).+$')
+        CONSTRAINT LPW CHECK(LENGTH(LPassword) >= 8)
     );
 
 -- Create the ADMIN table
@@ -48,13 +48,16 @@ CREATE TABLE ADMIN
 -- Create the LOAN_POST table (moved before MATCHED_POST due to foreign key reference)
 CREATE TABLE LOAN_POST
     (
-        PName              VARCHAR(255)        NOT NULL,
+        P_ID               INT AUTO_INCREMENT  NOT NULL,
+        PTitle             VARCHAR(255)        NOT NULL,
+        Description        VARCHAR(255)        NOT NULL,
         MaxRate            INT                 NOT NULL,
-        MinTermL           DATE                NOT NULL,
-        MaxTermL           DATE                NOT NULL,
+        MinTermStart       DATE                NOT NULL,
+        MinTermEnd         DATE                NOT NULL,
+        MaxTermStart       DATE                NOT NULL,
+        MaxTermEnd         DATE                NOT NULL,
         PStatus            VARCHAR(255)        NOT NULL,
         LType              VARCHAR(255)        NOT NULL,
-        P_ID               CHAR(10)            NOT NULL,
         Desired_amt        VARCHAR(255)        NOT NULL,
         CEmail             VARCHAR(50),
         M_ID               CHAR(10),          

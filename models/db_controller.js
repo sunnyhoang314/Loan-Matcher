@@ -7,16 +7,16 @@ var bodyParser = require('body-parser');
 // Configuration for SQL Server connection
 var con = mysql.createConnection({
     host: 'localhost',
-    user: process.env.DB_USER,         
-    password: process.env.DB_PASSWORD,     
-    database: 'loan_matcher',     
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: 'loan_matcher',
 });
 
 // Connect to the database
 con.connect(function (err) {
     if (err) {
         throw err;
-    }else{
+    } else {
         console.log('Connected to the database');
     }
 });
@@ -52,10 +52,10 @@ module.exports.signupClient = async function (firstName, lastName, email, phone,
         const insertQuery = 'INSERT INTO client (CEmail, Fname, Lname, CPhone, CLocation, DOB_Establishment, Credit, CPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
         await con.promise().query(insertQuery, [email, firstName, lastName, phone, location, DOBorEST, creditScore, password]);
         console.log('Client signed up successfully');
-        return { status: 'success'};
+        return { status: 'success' };
     } catch (err) {
         console.error('Error occurred during signup:', err);
-        return { status: 'error', message: ' Error occurred during signup'};
+        return { status: 'error', message: ' Error occurred during signup' };
     }
 };
 
@@ -66,14 +66,14 @@ module.exports.loginClient = async function (email, password) {
         const result = await con.promise().query(query, [email, password]);
         if (result[0].length > 0) {
             console.log('Client logged in successfully');
-            return { status: 'success'};
+            return { status: 'success' };
         } else {
             console.log('Invalid email or password');
-            return { status: 'error', message: 'Invalid email or password'};
+            return { status: 'error', message: 'Invalid email or password' };
         }
     } catch (err) {
         console.error('Error occurred during login:', err);
-        return { status: 'error', message: 'Error occurred during login'};
+        return { status: 'error', message: 'Error occurred during login' };
     }
 };
 
@@ -108,10 +108,10 @@ module.exports.signupLoanProvider = async function (firstName, lastName, email, 
         const insertQuery = 'INSERT INTO loan_provider (LEmail, Fname, Lname, LPhone, LLocation, LicenseNo, LPassword) VALUES (?, ?, ?, ?, ?, ?, ?)';
         await con.promise().query(insertQuery, [email, firstName, lastName, phone, location, license, password]);
         console.log('Loan Provider signed up successfully');
-        return { status: 'success'};
+        return { status: 'success' };
     } catch (err) {
         console.error('Error occurred during signup:', err);
-        return { status: 'error', message: ' Error occurred during signup'};
+        return { status: 'error', message: ' Error occurred during signup' };
     }
 };
 
@@ -124,13 +124,41 @@ module.exports.loginLoanProvider = async function (email, password) {
         const result = await con.promise().query(query, [email, password]);
         if (result[0].length > 0) {
             console.log('Loan Provider logged in successfully');
-            return { status: 'success'};
+            return { status: 'success' };
         } else {
             console.log('Invalid email or password');
-            return { status: 'error', message: 'Invalid email or password'};
+            return { status: 'error', message: 'Invalid email or password' };
         }
     } catch (err) {
         console.error('Error occurred during login:', err);
-        return { status: 'error', message: 'Error occurred during login'};
+        return { status: 'error', message: 'Error occurred during login' };
+    }
+};
+
+module.exports.createLoanPost = async (post) => {
+    try {
+        const {
+            title,
+            maxRate,
+            minStartDate,
+            minEndDate,
+            maxStartDate,
+            maxEndDate,
+            description,
+            category,
+            maxAmount,
+            Cemail,
+        } = post;
+
+        const query = `INSERT INTO loan_post (PTitle, Description, MaxRate, MinTermStart, MinTermEnd, MaxTermStart,MaxTermEnd, PStatus, LType, Desired_amt, CEmail)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', ?, ?, ?)`;
+
+        const values = [title, description, maxRate, minStartDate, minEndDate, maxStartDate,maxEndDate, category, maxAmount, Cemail];
+
+        await con.promise().query(query, values);
+        return { status: "success" };
+    } catch (err) {
+        console.error("Database Error:", err);
+        return { status: "error", message: "Failed to save loan post to database." };
     }
 };

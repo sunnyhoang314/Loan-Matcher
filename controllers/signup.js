@@ -29,6 +29,9 @@ router.post(
     check('lastName').isAlpha().withMessage('Enter a valid last name'),
     check('email').isEmail().withMessage('Enter a valid email'),
     check('DOBorEST').isDate().withMessage('Enter a valid Date of birth or Establishment'),
+    check('phone').isMobilePhone().withMessage('Enter a valid phone number'),
+    check('location').isAlpha().withMessage('Enter a valid location'),
+    check('creditScore').isInt({ min: 0 }).withMessage('Enter a valid credit score'),
     check("password")
         .isLength({ min: 8 })
         .withMessage('Password must be at least 4 characters long'),
