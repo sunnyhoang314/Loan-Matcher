@@ -428,7 +428,7 @@ li {
 .matched-post-popup,
 .accepted-post-popup {
     position: fixed;
-    top: 600px; /* Adjust to leave space for the top navigation bar */
+    top: 550px; /* Adjust to leave space for the top navigation bar */
     left: 50%;
     transform: translate(-50%, -50%); /* Adjust the position to ensure exact centering */
     width: 80%;
