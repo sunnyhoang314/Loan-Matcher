@@ -43,6 +43,15 @@ router.post(
         check("category").isIn(["finance", "real-estate", "business", "other"]).withMessage("Invalid category selected"),
         check("min-amount").isInt({ min: 1 }).withMessage("Minimum loan amount must be greater than 0"),
         check("max-amount").isInt({ min: 1 }).withMessage("Maximum loan amount must be greater than 0"),
+        check('max-amount').custom((value, { req }) => {
+            const minAmount = req.body['min-amount'];
+            const maxAmount = value;
+    
+            if (minAmount >= maxAmount) {
+                throw new Error('Maximum loan amount must be greater than Minimum loan amount');
+            }
+            return true;
+        }).withMessage('Maximum loan amount must be greater than Minimum loan amount'),
     ],
     async function (req, res) {
         const errors = validationResult(req);

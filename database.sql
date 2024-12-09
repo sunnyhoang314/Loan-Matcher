@@ -68,15 +68,16 @@ CREATE TABLE LOAN_POST
 -- Create the LOAN_OFFER table (moved before MATCHED_POST due to foreign key reference)
 CREATE TABLE LOAN_OFFER
     (
+        O_ID               INT AUTO_INCREMENT  NOT NULL,
+        Description        VARCHAR(255)        NOT NULL,
         OName              VARCHAR(255)        NOT NULL,
         MinRate            INT                 NOT NULL,
         MinTermStart       DATE                NOT NULL,
         MinTermEnd         DATE                NOT NULL,
         MaxTermStart       DATE                NOT NULL,
-        MaxTermEnd         DATA                NOT NULL,
+        MaxTermEnd         DATE                NOT NULL,
         OStatus            VARCHAR(255)        NOT NULL,
         LType              VARCHAR(255)        NOT NULL,
-        O_ID               INT AUTO_INCREMENT  NOT NULL,
         Min_amt            VARCHAR(255)        NOT NULL,
         Max_amt            VARCHAR(255)        NOT NULL,
         LEmail             VARCHAR(50),
