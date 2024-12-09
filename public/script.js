@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function () {
     links.forEach(function (link) {
         link.addEventListener('click', function (event) {
             // Prevent fade-out on tab buttons
-            if (link.id === 'settings-button' || link.id === 'notif-button' || link.id === 'create-post-link' || link.id === 'matched-post-link' || link.id === 'accepted-post-link') {
+            if (link.id === 'settings-button' || link.id === 'create-post-link' || link.id === 'matched-post-link' || link.id === 'accepted-post-link') {
                 return; // Do nothing for settings
             }
 
@@ -90,26 +90,26 @@ function showLogout() {
 
 
 // JavaScript for Notification Popup
-const notifButton = document.getElementById('notif-button');
-const notificationPopup = document.getElementById('notification-popup');
+// const notifButton = document.getElementById('notif-button');
+// const notificationPopup = document.getElementById('notification-popup');
 
 // Show notification popup
-notifButton.addEventListener('click', (event) => {
-    event.stopPropagation(); // Prevent the click event from propagating to the document
-    notificationPopup.style.display = 'block';
-});
+// notifButton.addEventListener('click', (event) => {
+//     event.stopPropagation(); // Prevent the click event from propagating to the document
+//     notificationPopup.style.display = 'block';
+// });
 
 // Close notification popup when clicking outside of it
-document.addEventListener('click', (event) => {
-    if (!notificationPopup.contains(event.target) && event.target !== notifButton) {
-        notificationPopup.style.display = 'none';
-    }
-});
+// document.addEventListener('click', (event) => {
+//     if (!notificationPopup.contains(event.target) && event.target !== notifButton) {
+//         notificationPopup.style.display = 'none';
+//     }
+// });
 
-// Close notification popup explicitly with a button inside the popup
-function closeNotification() {
-    notificationPopup.style.display = 'none';
-}
+// // Close notification popup explicitly with a button inside the popup
+// function closeNotification() {
+//     notificationPopup.style.display = 'none';
+// }
 
 // Select elements
 const createPostPopup = document.getElementById('create-post-popup');
