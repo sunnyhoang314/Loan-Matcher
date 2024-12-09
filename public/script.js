@@ -239,7 +239,7 @@ function renderMatchedPosts() {
     matchedPostsContainer.innerHTML = ''; // Clear container
 
     // Filter matched posts
-    const matchedPosts = posts.filter(post => post.matched);
+    //const matchedPosts = posts.filter(post => post.matched);
 
     if (matchedPosts.length === 0) {
         matchedPostsContainer.innerHTML = '<h2>You don\'t have any matched posts. Perhaps you didn\'t create a post?</h2>';

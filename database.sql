@@ -68,13 +68,13 @@ CREATE TABLE LOAN_POST
 -- Create the LOAN_OFFER table (moved before MATCHED_POST due to foreign key reference)
 CREATE TABLE LOAN_OFFER
     (
+        O_ID               INT AUTO_INCREMENT  NOT NULL,
         OName              VARCHAR(255)        NOT NULL,
         MinRate            INT                 NOT NULL,
         MinTermL           DATE                NOT NULL,
         MaxTermL           DATE                NOT NULL,
         OStatus            VARCHAR(255)        NOT NULL,
         LType              VARCHAR(255)        NOT NULL,
-        O_ID               CHAR(10)            NOT NULL,
         Min_amt            VARCHAR(255)        NOT NULL,
         Max_amt            VARCHAR(255)        NOT NULL,
         LEmail             VARCHAR(50),
@@ -86,14 +86,12 @@ CREATE TABLE LOAN_OFFER
 -- Create the MATCHED_POST table
 CREATE TABLE MATCHED_POST
     (
+        M_ID            INT            NOT NULL,
         MRate           INT,
         MDate           DATE,
         MStatus         VARCHAR(255),
-        M_ID            CHAR(10)            NOT NULL,
-        P_ID            CHAR(10),            
-        O_ID            CHAR(10),          
-        CDecision       BOOLEAN,
-        LDecision       BOOLEAN,
+        P_ID            INT,            
+        O_ID            INT,          
         CEmail          VARCHAR(50),         
         LEmail          VARCHAR(50),         
         CONSTRAINT MPPK PRIMARY KEY(M_ID),

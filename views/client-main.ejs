@@ -104,6 +104,10 @@
     </div>
     
     <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
+    <!-- Pass matchedPosts as a global variable -->
+    <script>
+        matchedPosts = JSON.parse('<%- JSON.stringify(matchedPosts) %>');
+    </script>
     <script src="/script.js" onerror="this.onerror=null;this.src='../public/script.js';"></script>
     <script src="/event/createPostEvent.js"></script>
 </body>

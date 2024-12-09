@@ -162,3 +162,26 @@ module.exports.createLoanPost = async (post) => {
         return { status: "error", message: "Failed to save loan post to database." };
     }
 };
+
+module.exports.getClientMatchedPosts = async (email) => {
+    const query = `
+        SELECT 
+            lo.PTitle AS title,
+            CONCAT(lo.MinTermStart, ' to ', lo.MinTermEnd) AS mintermlength,
+            CONCAT(lo.MaxTermStart, ' to ', lo.MaxTermEnd) AS maxtermlength,
+            lo.Description AS description,
+            lo.MaxAmount AS minloanamount,
+            lo.MinRate AS mininterestrate,
+            lo.LType AS category,
+            mp.ClientAccepted AS accepted,
+            mp.ProviderAccepted AS posterAccepted,
+            lp.CEmail AS contactEmail,
+            lp.CPhone AS contactPhone
+        FROM matched_post mp
+        JOIN loan_post lp ON mp.P_ID = lp.P_ID
+        JOIN loan_offer lo ON mp.O_ID = lo.O_ID
+        WHERE lp.CEmail = ?
+    `;
+    const [rows] = await con.promise().query(query, [email]);
+    return rows;
+};
