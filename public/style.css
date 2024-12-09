@@ -216,7 +216,7 @@ footer {
 
 .client-login, .client-signup, .loan-provider-signup, .loan-provider-login {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%); /* Centering trick */
     background: #fff;
@@ -226,10 +226,6 @@ footer {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     text-align:left;
     animation: fadeIn 2s ease-in-out forwards;
-}
-
-.client-signup, .loan-provider-signup {
-    top: 50%;
 }
 
 .client-login form, .client-signup form, .loan-provider-signup form, .loan-provider-login form {
