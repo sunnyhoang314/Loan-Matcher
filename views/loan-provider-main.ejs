@@ -15,9 +15,9 @@
                 <div class="container">
                     <ul>
                         <li><a href="#" id="create-post-link">Create Post</a></li>
+                        <li><a href="#" id="my-post-link">My Post</a></li>
                         <li><a href="#" id="matched-post-link">Matched Posts</a></li>
                         <li><a href="#" id="accepted-post-link">Accepted Posts</a></li>
-                        <li><a href="#" id="notif-button"></a></li>
                         <li><a href="#" id="settings-button">Settings</a></li>
                     </ul>
                 </div>
@@ -92,10 +92,17 @@
         </form>
     </div>
     <div class="matched-post-popup" id="matched-post-popup">
-        <p>test</p>
+        <h2>Matched Posts</h2>
+        <div id="matched-posts-container" class="matched-posts-container">
+            <!-- Posts will be dynamically inserted here -->
+        </div>
     </div>
+    
     <div class="accepted-post-popup" id="accepted-post-popup">
-        <p>test 2</p>
+        <h2>Accepted Posts</h2>
+        <div id="accepted-posts-container" class="accepted-posts-container">
+            <!-- Accepted posts will be dynamically inserted here -->
+        </div>
     </div>
     <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
     <script src="/script.js" onerror="this.onerror=null;this.src='../public/script.js';"></script>
