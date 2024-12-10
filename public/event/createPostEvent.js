@@ -1,4 +1,4 @@
-document.getElementById("post-form").addEventListener("submit", (event) => {
+/* document.getElementById("post-form").addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(document.getElementById("post-form"));
     
@@ -22,6 +22,9 @@ document.getElementById("post-form").addEventListener("submit", (event) => {
             text: "Your post was created successfully!",
             }).then(() => {
             window.location.href = "/client-main"; // Redirect to posts page
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({ type: 'LoanPost_Created' }));
+            }
             });
         }
         })
@@ -33,3 +36,4 @@ document.getElementById("post-form").addEventListener("submit", (event) => {
         });
         });
     });
+ */

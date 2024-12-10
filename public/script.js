@@ -241,13 +241,16 @@ const posts = [
     }
 ];
 
-function renderMatchedPosts() {
+let matchedPosts = [];
+
+async function renderMatchedPosts () {
     const matchedPostsContainer = document.getElementById('matched-posts-container');
     matchedPostsContainer.innerHTML = ''; // Clear container
 
     // Filter matched posts
     //const matchedPosts = posts.filter(post => post.matched);
-
+    await fetchClientMatchedPosts();
+    console.log('email: ',email);
     if (matchedPosts.length === 0) {
         matchedPostsContainer.innerHTML = '<h2>You don\'t have any matched posts. Perhaps you didn\'t create a post?</h2>';
     } else {
@@ -255,17 +258,29 @@ function renderMatchedPosts() {
             const postElement = document.createElement('div');
             postElement.classList.add('post');
             postElement.innerHTML = `
-                <h3>Loan Offer: ${post.Oname} - Loan Post: ${post.Ptitle}</h3>
+                <h3>Your post: ${post.Ptitle} matches Loan Offer: ${post.Otitle}</h3>
+                <!-- Emphasized Score -->
+                <div class="score-container">
+                    <p><strong>Matching Score: </strong><span class="score-badge">${post.score}</span></p>
+                </div>
                 <p><strong>Minimum Interest Rate: </strong>${post.minInterestRate}%</p>
                 <p><strong>Minimum Term Length: </strong>${post.minTermLength}</p>
                 <p><strong>Maximum Term Length: </strong>${post.maxTermLength}</p>
                 <p>${post.description}</p>
                 <p><strong>Category: </strong>${post.category}</p>
                 <p><strong>Maximum Loan Amount: </strong>$${post.maxLoanAmount}</p>
-                <div class="post-actions">
-                    <button class="accept-button" data-index="${index},${matchedPost.M_ID}">Accept</button>
-                    <button class="decline-button" data-index="${index},${matchedPost.M_ID}">Decline</button>
-                </div>
+                ${!post.CDecision  ? 
+                `
+                    <div class="post-actions">
+                        <button class="accept-button" data-index="${index},${post.M_ID}">Accept</button>
+                        <button class="decline-button" data-index="${index},${post.M_ID}">Decline</button>
+                    </div>
+                ` : post.status === "Declined" ? `
+                    <p><strong>Status:</strong> Acceptance Declined</p>
+                ` : `
+                    <p><strong>Status:</strong> Acceptance Pending</p>
+                `}
+                }
             `;
             matchedPostsContainer.appendChild(postElement);
         });
@@ -290,85 +305,138 @@ function renderMatchedPosts() {
     }
 }
 
-function handleAccept(index, matchedPostID) {
-    $.ajax({
-        type: 'POST',
-        url: '/acceptPost',
-        data: {
+async function renderMatchedOffers () {
+    const matchedPostsContainer = document.getElementById('matched-posts-container');
+    matchedPostsContainer.innerHTML = ''; // Clear container
+
+    // Filter matched posts
+    //const matchedPosts = posts.filter(post => post.matched);
+    await fetchLoanProviderMatchedPosts();
+    console.log('email: ',email);
+    if (matchedPosts.length === 0) {
+        matchedPostsContainer.innerHTML = '<h2>You don\'t have any matched offers. Perhaps you didn\'t create a offer?</h2>';
+    } else {
+        matchedPosts.forEach((post, index) => {
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.innerHTML = `
+                <h3>Your Offer: ${post.Otitle} matches Client Post: ${post.Ptitle}</h3>
+                <!-- Emphasized Score -->
+                <div class="score-container">
+                    <p><strong>Matching Score: </strong><span class="score-badge">${post.score}</span></p>
+                </div>
+                <p><strong>Maximum Interest Rate: </strong>${post.maxInterestRate}%</p>
+                <p><strong>Minimum Term Length: </strong>${post.minTermLength}</p>
+                <p><strong>Maximum Term Length: </strong>${post.maxTermLength}</p>
+                <p><strong>Description: </strong>${post.description}</p>
+                <p><strong>Category: </strong>${post.category}</p>
+                <p><strong>Desired Loan Amount: </strong>$${post.loanAmount}</p>
+                ${post.status === 'Declined'  ? 
+                `
+                    <p><strong>Status:</strong> Acceptance Declined</p>
+                ` : !post.LDecision ? `
+                    <div class="post-actions">
+                        <button class="accept-button" data-index="${index},${post.M_ID}">Accept</button>
+                        <button class="decline-button" data-index="${index},${post.M_ID}">Decline</button>
+                    </div>
+                ` : `
+                    <p><strong>Status:</strong> Acceptance Pending</p>
+                `}
+            `;
+            matchedPostsContainer.appendChild(postElement);
+        });
+
+        // Add event listeners for buttons
+        const acceptButtons = document.querySelectorAll('.accept-button');
+        const declineButtons = document.querySelectorAll('.decline-button');
+
+        acceptButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const [index, matchedPostID] = e.target.dataset.index.split(',');
+                handleAccept(index, matchedPostID);
+            });
+        });
+    
+        declineButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const [index,matchedPostID] = e.target.dataset.index.split(',');
+                handleDecline(index, matchedPostID);
+            });
+        });
+    }
+}
+
+function handleAccept(index,matchedPostID) {
+    fetch('/acceptPost', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
             M_ID: matchedPostID,
-            Email: email
-        },
-        success: function(response) {
-            if (response.status === "success") {
-                alert(response.message);
-                handleAcceptUI(index);
-                
-            } else {
-                alert(response.message);
-            }
-        },
-        error: function(error) {
-            console.error("Error accepting post:", error);
+            Email: email,
+            userType: userType
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(data.message);
+            handleAcceptUI(index);
+        } else {
+            alert(data.message);
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 }
 
 function handleAcceptUI(index) {
-    const post = matchedPosts[index];
-
-    // Mark the post as accepted
-    //post.accepted = true;
-    //post.matched = false;  // Remove it from the matched list
-
-    // Log which post is accepted
-    console.log(`Accepting post at index: ${index}, Post Title: ${post.title}`);
-
-    // Add to the accepted posts list
-    acceptedPosts.push(post);
-
-    // Remove the accepted post from the array
-    //posts.splice(index, 1);  // This removes the post at the given index
-
     // Refresh matched and accepted posts
-    renderMatchedPosts();
-    renderAcceptedPosts();
+    if(userType === "client") renderMatchedPosts();
+    if(userType === "loanProvider") renderMatchedOffers();
+    if(userType === "client") renderAcceptedClientPosts();;
+    if(userType === "loanProvider") renderAcceptedLoanProviderPosts();
 }
 
 
-function handleAccept(index, matchedPostID) {
-    $.ajax({
-        type: 'POST',
-        url: '/declinePost',
-        data: {
-            M_ID: matchedPostID,
-            Email: email
+function handleDecline(index, matchedPostID) {
+    fetch('/declinePost', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         },
-        success: function(response) {
-            if (response.status === "success") {
-                alert(response.message);
-                handleDeclineUI(index);
-                
-            } else {
-                alert(response.message);
-            }
-        },
-        error: function(error) {
-            console.error("Error accepting post:", error);
+        body: JSON.stringify({
+            M_ID: matchedPostID
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            handleDeclineUI(index);
+        } else {
+            alert(data.message);
         }
-    });
+    })
+    .catch(error => {
+        console.error('Error:', error); 
+    })
 }
 
 function handleDeclineUI(index) {
-    //post.accepted = false;  // Keep as not accepted
-    //post.matched = false;  // Remove from the matched section
-    //posts.splice(index, 1);  // This removes the post at the given index
-    alert(`You declined the post: ${post.title}`);
-    renderMatchedPosts();  // Refresh matched posts
+
+    if(userType === "client") renderMatchedPosts();  // Refresh matched posts
+    if(userType === "loanProvider") renderMatchedOffers();
 }
 
 // Render posts on page load
-document.addEventListener('DOMContentLoaded', () => {
-    renderMatchedPosts();
+document.addEventListener('DOMContentLoaded' , () => {
+    if(userType === "client") renderMatchedPosts();
+    if(userType === "loanProvider") renderMatchedOffers();
+    if(userType === "client") updateMyPosts();
+    if(userType === "loanProvider") updateMyOffers();
 });
 
 document.getElementById('matched-post-link').addEventListener('click', () => {
@@ -377,14 +445,14 @@ document.getElementById('matched-post-link').addEventListener('click', () => {
     document.getElementById('accepted-post-popup').style.display = 'none'; // Example for another tab
 
     // Show the matched posts tab
-    const matchedPostsTab = document.getElementById('matched-posts-popup');
-    matchedPostsTab.style.display = 'block';
-    renderMatchedPosts(); // Refresh the posts if necessary
+    matchedPostPopup.style.display = 'block';
+    if(userType === "client") renderMatchedPosts(); // Refresh the posts if necessary
+    if(userType === "loanProvider") renderMatchedOffers();
 });
 
-const acceptedPosts = [];  // Store accepted posts here
+var acceptedPosts = [];  // Store accepted posts here
 
-function renderAcceptedPosts() {
+async function renderAcceptedClientPosts() {
     // Add console.log for debugging
     console.log('Rendering accepted posts. Current length:', acceptedPosts.length);
 
@@ -397,6 +465,57 @@ function renderAcceptedPosts() {
     }
 
     acceptedPostsContainer.innerHTML = ''; // Clear the container
+    await fetchClientMatchedPosts();
+    console.log('accpetedPosts: ',acceptedPosts);  
+
+    // Check if there are any accepted posts
+    if (acceptedPosts.length === 0) {
+        console.log('No accepted offers, setting empty message');
+        acceptedPostsContainer.innerHTML = '<h2>You don\'t have any accepted offers.</h2>';
+    } else {
+        // Iterate through acceptedPosts and create post elements
+        console.log(acceptedPosts);
+        acceptedPosts.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.innerHTML = `
+                <h3>Your Post: ${post.Ptitle} - Matching Loan Offer: ${post.Otitle}</h3>
+                <p><strong>Minimum Interest Rate: </strong>${post.minInterestRate}%</p>
+                <p><strong>Minimum Term Length: </strong>${post.minTermLength}</p>
+                <p><strong>Maximum Term Length: </strong>${post.maxTermLength}</p>
+                <p><strong>Description: ${post.description}</p>
+                <p><strong>Category: </strong>${post.category}</p>
+                <p><strong>Maximum Loan Amount: </strong>$${post.maxLoanAmount}</p>
+                <p><strong>Loan Provider Email: </strong>${post.Lemail}</p>
+                <p><strong>Loan Provider Phone: </strong>${post.phone}</p>
+                <p><strong>Loan Provider Name: </strong>${post.Fname} ${post.Lname}</p>
+            `;
+            /* <div class="post-actions">
+                    ${post.status == 'Accepted'
+                        ? `<button class="view-contact-button" onclick="viewContact('${post.Lemail}', '${post.contactInfo.phone}')">View Contact Information</button>`
+                        : `<p>Acceptance: ${post.status}</p>`
+                    }
+                </div> */
+            acceptedPostsContainer.appendChild(postElement);
+        });
+    }
+}
+
+async function renderAcceptedLoanProviderPosts() {
+    // Add console.log for debugging
+    console.log('Rendering accepted posts. Current length:', acceptedPosts.length);
+
+    const acceptedPostsContainer = document.getElementById('accepted-posts-container');
+    
+    // Additional null check
+    if (!acceptedPostsContainer) {
+        console.error('Could not find accepted-posts-container element');
+        return;
+    }
+
+    acceptedPostsContainer.innerHTML = ''; // Clear the container
+    await fetchLoanProviderMatchedPosts();
+    console.log('accpetedPosts: ',acceptedPosts);  
 
     // Check if there are any accepted posts
     if (acceptedPosts.length === 0) {
@@ -404,41 +523,46 @@ function renderAcceptedPosts() {
         acceptedPostsContainer.innerHTML = '<h2>You don\'t have any accepted posts.</h2>';
     } else {
         // Iterate through acceptedPosts and create post elements
+        console.log(acceptedPosts);
         acceptedPosts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.classList.add('post');
             postElement.innerHTML = `
-                <h3>${post.title}</h3>
-                <p><strong>Minimum Interest Rate: </strong>${post.mininterestrate}%</p>
-                <p><strong>Minimum Term Length: </strong>${post.mintermlength}</p>
-                <p><strong>Maximum Term Length: </strong>${post.maxtermlength}</p>
+                <h3>Your Offer: ${post.Otitle} - Matching Client Post: ${post.Ptitle}</h3>
+                <p><strong>Maximum Interest Rate: </strong>${post.maxInterestRate}%</p>
+                <p><strong>Minimum Term Length: </strong>${post.minTermLength}</p>
+                <p><strong>Maximum Term Length: </strong>${post.maxTermLength}</p>
                 <p>${post.description}</p>
                 <p><strong>Category: </strong>${post.category}</p>
-                <p><strong>Minimum Loan Amount: </strong>$${post.minloanamount}</p>
-                <div class="post-actions">
+                <p><strong>Desired Loan Amount: </strong>$${post.loanAmount}</p>
+                <p><strong>Loan Provider Email: </strong>${post.Cemail}</p>
+                <p><strong>Loan Provider Phone: </strong>${post.phone}</p>
+                <p><strong>Loan Provider Name: </strong>${post.Fname} ${post.Lname}</p>
+            `;
+            /* <div class="post-actions">
                     ${post.status == 'Accepted'
-                        ? `<button class="view-contact-button" onclick="viewContact('${post.contactInfo.email}', '${post.contactInfo.phone}')">View Contact Information</button>`
+                        ? `<button class="view-contact-button" onclick="viewContact('${post.Lemail}', '${post.contactInfo.phone}')">View Contact Information</button>`
                         : `<p>Acceptance: ${post.status}</p>`
                     }
-                </div>
-            `;
+                </div> */
             acceptedPostsContainer.appendChild(postElement);
         });
     }
 }
 
 // Ensure the function is called when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', renderAcceptedPosts);
+document.addEventListener('DOMContentLoaded', renderAcceptedClientPosts);
+document.addEventListener('DOMContentLoaded', renderAcceptedLoanProviderPosts);
 
 document.getElementById('accepted-post-link').addEventListener('click', () => {
     // Hide other tabs
     document.getElementById('create-post-popup').style.display = 'none';
-    document.getElementById('matched-posts-popup').style.display = 'none';
-
+    matchedPostPopup.style.display = 'none';
     // Show the accepted posts tab
     const acceptedPostsTab = document.getElementById('accepted-post-popup');
     acceptedPostsTab.style.display = 'block';  // Show the accepted posts popup
-    renderAcceptedPosts(); // Refresh the posts if necessary
+    if(userType === "client") renderAcceptedClientPosts(); // Refresh the posts if necessary
+    if(userType === "loanProvider") renderAcceptedLoanProviderPosts();
 });
 
 
@@ -451,76 +575,309 @@ function viewContact(email, phone) {
 // Array to store posts
 let myPosts = [];
 
-// Capture form submission
-const postForm = document.getElementById('post-form');
-postForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    // Get form data
-    const post = {
-        title: document.getElementById('title').value,
-        maxRate: document.getElementById('max-rate').value,
-        minStartDate: document.getElementById('min-start-date').value,
-        minEndDate: document.getElementById('min-end-date').value,
-        maxStartDate: document.getElementById('max-start-date').value,
-        maxEndDate: document.getElementById('max-end-date').value,
-        description: document.getElementById('post-description').value,
-        category: document.getElementById('post-category').value,
-        maxAmount: document.getElementById('post-max-amount').value,
-    };
-
-    // Add post to myPosts array
-    myPosts.push(post);
-
-    // Clear the form
-    postForm.reset();
-
-    // Hide the "Create Post" popup
-    document.getElementById('create-post-popup').style.display = 'none';
-
-    // Update "My Posts" popup
-    updateMyPosts();
-});
-
 // Function to update "My Posts" popup
-function updateMyPosts() {
+async function updateMyPosts() {
     const myPostContainer = document.getElementById('my-posts-container');
     myPostContainer.innerHTML = ''; // Clear existing posts
-
+    await fetchClientPosts();
+    console.log(myPosts);
     myPosts.forEach((post, index) => {
         const postDiv = document.createElement('div');
         postDiv.className = 'post';
 
         postDiv.innerHTML = `
             <h3>${post.title}</h3>
-            <p><strong>Interest Rate:</strong> ${post.maxRate}%</p>
-            <p><strong>Term Length:</strong> ${post.minStartDate} to ${post.minEndDate} (min), ${post.maxStartDate} to ${post.maxEndDate} (max)</p>
+            <p><strong>Maximum Interest Rate:</strong> ${post.maxInterestRate}%</p>
+            <p><strong>Term Length:</strong> ${post.minTermLength} (min), ${post.maxTermLength} (max)</p>
             <p><strong>Description:</strong> ${post.description}</p>
             <p><strong>Category:</strong> ${post.category}</p>
-            <p><strong>Maximum Loan Amount:</strong> $${post.maxAmount}</p>
-            <button onclick="deletePost(${index})">Delete</button>
+            <p><strong>Desired Loan Amount:</strong> $${post.desiredAmount}</p>
+            <button class  = "delete-button" data-id="${post.P_ID}">Delete</button>
         `;
-
         myPostContainer.appendChild(postDiv);
+    });
+
+    // Add event listeners for delete buttons
+    const deleteButtons = document.querySelectorAll('.delete-button');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = e.target.dataset.id; // Retrieve the index from data attribute
+            handleClientPostDelete(id);
+        });
+    });
+}
+
+async function updateMyOffers() {
+    const myPostContainer = document.getElementById('my-posts-container');
+    myPostContainer.innerHTML = ''; // Clear existing posts
+    await fetchLoanProviderPosts();
+    console.log(myPosts);
+    myPosts.forEach((post, index) => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post';
+
+        postDiv.innerHTML = `
+            <h3>${post.title}</h3>
+            <p><strong>Maximum Interest Rate:</strong> ${post.minInterestRate}%</p>
+            <p><strong>Term Length:</strong> ${post.minTermLength} (min), ${post.maxTermLength} (max)</p>
+            <p><strong>Description:</strong> ${post.description}</p>
+            <p><strong>Category:</strong> ${post.category}</p>
+            <p><strong>Minimum Loan Amount:</strong> $${post.minLoanAmount}</p>
+            <p><strong>Maximum Loan Amount:</strong> $${post.maxLoanAmount}</p>
+            <button class  = "delete-button" data-id="${post.O_ID}">Delete</button>
+        `;
+        myPostContainer.appendChild(postDiv);
+    });
+
+    // Add event listeners for delete buttons
+    const deleteButtons = document.querySelectorAll('.delete-button');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = e.target.dataset.id; // Retrieve the index from data attribute
+            handleLoanPorviderPostDelete(id);
+        });
     });
 }
 
 // Function to delete a post
-function deletePost(index) {
-    myPosts.splice(index, 1);
-    updateMyPosts();
+function handleClientPostDelete(id) {
+    fetch('client/deletePost', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            P_ID: id,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            console.log("post deleted",data);
+            updateMyPosts();
+            renderMatchedPosts();
+            renderAcceptedClientPosts();
+        } else {
+            alert(data.message);
+            console.log("post not deleted",data);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
+function handleLoanPorviderPostDelete(id) {
+    fetch('loanProvider/deletePost', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            O_ID: id,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            updateMyOffers();
+            renderMatchedOffers();
+            renderAcceptedLoanProviderPosts();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 // Show/Hide "My Post" Popup
 const myPostLink = document.getElementById('my-post-link');
 const myPostPopup = document.getElementById('my-post-popup');
 const closeMyPostsButton = document.getElementById('close-my-posts');
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    if(userType === 'client') fetchClientPosts();
+    if(userType === 'loanProvider') fetchLoanProviderPosts();
+})
+
 myPostLink.addEventListener('click', (e) => {
     e.preventDefault();
+    if(userType === 'client') updateMyPosts();
+    if(userType === 'loanProvider') updateMyOffers();
     myPostPopup.style.display = 'block';
     closeAcceptedPostPopup();
     closeCreatePostPopup();
     closeMatchedPostPopup();
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    if(userType === 'client') {
+        postForm = document.getElementById('post-form')
+        postForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            handleCreatePost();
+        })
+    }
+    if(userType === 'loanProvider') {
+        offerForm = document.getElementById('offer-form')
+        offerForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            handleCreateOffer();
+        })
+    }
+});
+
+function handleCreatePost() {
+    const formData = new FormData(document.getElementById("post-form"));
+
+    fetch("client/createPost", {
+        method: "POST",
+        body: formData,
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        if (data.status === "error") {
+            Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: data.error,
+            });
+        } else {
+            Swal.fire({
+            icon: "success",
+            title: "Post Created",
+            text: "Your post was created successfully!",
+            }).then(() => {
+            // Update "My Posts" popup
+                updateMyPosts();
+                closeCreatePostPopup();
+                myPostPopup.style.display = 'block';
+                document.getElementById("post-form").reset();
+            });
+        }
+        })
+        .catch((err) => {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+        });
+        });
+    }
+
+function handleCreateOffer() {
+    event.preventDefault();
+    const formData = new FormData(document.getElementById("offer-form"));
+    
+
+    fetch("loan-provider/createOffer", {
+        method: "POST",
+        body: formData,
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        if (data.status === "error") {
+            Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: data.error,
+            });
+        } else {
+            Swal.fire({
+            icon: "success",
+            title: "Offer Created",
+            text: "Your offer was created successfully!",
+            }).then(() => {
+                updateMyOffers();
+                closeCreatePostPopup();
+                myPostPopup.style.display = 'block';
+                document.getElementById("offer-form").reset();
+            });
+        }
+        })
+        .catch((err) => {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+        });
+        });
+    }
+    
+
+// Fetch data from the backend
+async function fetchClientPosts() {
+    try{
+        const response = await fetch('/client/getPosts');
+        const data = await response.json();
+        if (data.success) {
+            // Use the data to update the UI
+            console.log('data: ',data.posts);
+            myPosts = data.posts;
+            console.log('myposts: ',myPosts);
+        } else {
+            console.error('Failed to fetch posts:', data.error);
+        }
+    }catch (error) {
+        console.error('Error fetching my posts:', error);
+    }
+}
+
+async function fetchLoanProviderPosts() {
+    try{
+        const response = await fetch('/loanProvider/getPosts');
+        const data = await response.json();
+        if (data.success) {
+            // Use the data to update the UI
+            console.log('data: ',data.posts);
+            myPosts = data.posts;
+            console.log('myposts: ',myPosts);
+        } else {
+            console.error('Failed to fetch posts:', data.error);
+        }
+    }catch (error) {
+        console.error('Error fetching my posts:', error);
+    }
+}
+
+async function fetchClientMatchedPosts() {
+    try {
+        const response = await fetch('/client/getMatchedPosts');
+        const data = await response.json();
+        if (data.success) {
+            retrievedPosts = data.posts;
+            console.log('data: ', retrievedPosts);
+            matchedPosts = retrievedPosts.filter(post => String(post.status).includes('Pending') || (post.status == 'Declined' && post.CDecision));
+            acceptedPosts = retrievedPosts.filter(post => String(post.status).includes('Accepted'));
+            console.log('matchedPosts: ', matchedPosts);
+        } else {
+            console.error('Failed to fetch posts:', data.error);
+        }
+    } catch (error) {
+        console.error('Error fetching matchedposts:', error);
+    }
+}
+
+async function fetchLoanProviderMatchedPosts() {
+    try {
+        const response = await fetch('/loanProvider/getMatchedPosts');
+        const data = await response.json();
+        if (data.success) {
+            retrievedPosts = data.posts;
+            console.log('data: ', retrievedPosts);
+            matchedPosts = retrievedPosts.filter(post => post.status == 'Pending' || (post.status == 'Declined' && post.LDecision));
+            acceptedPosts = retrievedPosts.filter(post => post.status == 'Accepted');
+            console.log('matchedPosts: ', matchedPosts);
+        } else {
+            console.error('Failed to fetch posts:', data.error);
+        }
+    } catch (error) {
+        console.error('Error fetching matchedposts:', error);
+    }
+}

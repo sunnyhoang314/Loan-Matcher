@@ -50,6 +50,7 @@ router.post(
         req.session.loggedIn = true;
         req.session.Cemail = email;
         res.cookie('email', email);
+        res.cookie('userType', 'client');
 
 
         // Respond with success message
@@ -93,6 +94,7 @@ router.post(
         req.session.loggedIn = true;
         req.session.Lemail = email;
         res.cookie('email', email);
+        res.cookie('userType', 'loanProvider');
 
 
         // Respond with success message

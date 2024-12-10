@@ -429,7 +429,7 @@ li {
 .accepted-post-popup,
 .my-post-popup {
     position: fixed;
-    top: 550px; /* Adjust to leave space for the top navigation bar */
+    top: 500px; /* Adjust to leave space for the top navigation bar */
     left: 50%;
     transform: translate(-50%, -50%); /* Adjust the position to ensure exact centering */
     width: 80%;
@@ -440,6 +440,10 @@ li {
     overflow-y: auto; /* Enable scrolling if content exceeds height */
     padding-bottom: 80px;
     align-items: center;
+}
+
+.my-post-popup p {
+    font-weight: 500;
 }
 
 .matched-post-popup p {
@@ -479,7 +483,7 @@ li {
 .matched-posts-container, 
 .accepted-posts-container,
 .my-post-container {
-    max-height: 600px; /* Adjust based on your design */
+    max-height: 550px; /* Adjust based on your design */
     overflow-y: auto; /* Enable vertical scrolling */
     border: 1px solid #ccc;
     padding: 10px;
@@ -511,6 +515,21 @@ li {
     justify-content: center; /* Centers the buttons horizontally */
     gap: 10px; /* Adds spacing between buttons */
 }
+
+.score-container {
+    margin-top: 10px;
+}
+
+.score-badge {
+    font-size: 1.5em; /* Larger font size */
+    font-weight: bold; /* Bold text */
+    color: #fff; /* White text color */
+    background-color: #007bff; /* Blue background */
+    padding: 5px 10px; /* Padding for the badge */
+    border-radius: 5px; /* Rounded corners */
+    display: inline-block; /* Inline block for styling */
+}
+
 
 .accept-button,
 .decline-button {

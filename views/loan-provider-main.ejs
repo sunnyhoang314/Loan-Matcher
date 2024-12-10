@@ -15,10 +15,10 @@
             <div class="logo"><a onclick="showLogout()">Loan Matcher</a></div>
                 <div class="container">
                     <ul>
-                        <li><a href="#" id="create-post-link">Create Post</a></li>
-                        <li><a href="#" id="my-post-link">My Post</a></li>
-                        <li><a href="#" id="matched-post-link">Matched Posts</a></li>
-                        <li><a href="#" id="accepted-post-link">Accepted Posts</a></li>
+                        <li><a href="#" id="create-post-link">Create Offers</a></li>
+                        <li><a href="#" id="my-post-link">My Offers</a></li>
+                        <li><a href="#" id="matched-post-link">Matched Offers</a></li>
+                        <li><a href="#" id="accepted-post-link">Accepted Offers</a></li>
                         <li><a href="#" id="settings-button">Settings</a></li>
                     </ul>
                 </div>
@@ -90,23 +90,32 @@
             <button type="submit">Submit</button>
             <button type="button" id="cancel-post">Cancel</button>
         </form>
+    </div>
+    <div class="my-post-popup" id="my-post-popup">
+        <h2>My Offers</h2>
+        <div id="my-posts-container" class="my-posts-container">
+            <!-- Posts will be dynamically inserted here -->
+        </div>
     </div>    
     <div class="matched-post-popup" id="matched-post-popup">
-        <h2>Matched Posts</h2>
+        <h2>Matched Offers</h2>
         <div id="matched-posts-container" class="matched-posts-container">
             <!-- Posts will be dynamically inserted here -->
         </div>
     </div>
     
     <div class="accepted-post-popup" id="accepted-post-popup">
-        <h2>Accepted Posts</h2>
+        <h2>Accepted Offers</h2>
         <div id="accepted-posts-container" class="accepted-posts-container">
             <!-- Accepted posts will be dynamically inserted here -->
         </div>
     </div>
     
     <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
+    <script>
+        email = JSON.parse('<%- JSON.stringify(email) %>');
+        userType = JSON.parse('<%- JSON.stringify(userType) %>');
+    </script>
     <script src="/script.js" onerror="this.onerror=null;this.src='../public/script.js';"></script>
-    <script src="/event/createOfferEvent.js"></script>
 </body>
 </html>

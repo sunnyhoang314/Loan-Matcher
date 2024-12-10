@@ -75,7 +75,7 @@ router.post(
             "max-amount": maxAmount,
         } = req.body;
 
-        Lemail = req.session.email;
+        Lemail = req.cookies.email;
         try {
             const result = await db.createLoanOffer({
                 title,

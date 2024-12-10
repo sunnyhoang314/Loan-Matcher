@@ -86,14 +86,14 @@ CREATE TABLE LOAN_OFFER
 -- Create the MATCHED_POST table
 CREATE TABLE MATCHED_POST
     (
-        M_ID            INt AUTO_INCREMENT    NOT NULL,
+        M_ID            INT AUTO_INCREMENT    NOT NULL,
         MRate           INT,
         MDate           DATE,
         MStatus         VARCHAR(255),
         P_ID            INT,            
         O_ID            INT,          
-        CDecision       BOOLEAN,
-        LDecision       BOOLEAN,
+        CDecision       BOOLEAN DEFAULT FALSE, -- Default is FALSE
+        LDecision       BOOLEAN DEFAULT FALSE, -- Default is FALSE
         CEmail          VARCHAR(50),         
         LEmail          VARCHAR(50),         
         CONSTRAINT MPPK PRIMARY KEY(M_ID),
@@ -102,6 +102,7 @@ CREATE TABLE MATCHED_POST
         CONSTRAINT MPFK3 FOREIGN KEY(CEmail) REFERENCES CLIENT(CEmail) ON DELETE RESTRICT ON UPDATE CASCADE,
         CONSTRAINT MPFK4 FOREIGN KEY(LEmail) REFERENCES LOAN_PROVIDER(LEmail) ON DELETE RESTRICT ON UPDATE CASCADE
     );
+
 
 -- Update LOAN_POST with MATCHED_POST foreign key
 ALTER TABLE LOAN_POST

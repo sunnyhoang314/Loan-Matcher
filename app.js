@@ -50,48 +50,113 @@ app.use(
     })
 );
 
-// WebSocket setup
-const wss = new WebSocket.Server({ server });
-console.log('WebSocket server created. Waiting for connections...');
-// Handle incoming WebSocket connections
-wss.on('connection', (wsInstance) => {
-    console.log('Socket connected');
-
-    // Listen for messages from the client
-    wsInstance.on('message', (message) => {
-        console.log('Message from socket:', message);
-        
-        // Broadcast message to all other clients
-        wss.clients.forEach(client => {
-            if (client !== wsInstance && client.readyState === WebSocket.OPEN) {
-                client.send(message);
-            }
-        });
-    });
-
-    wsInstance.on('close', () => {
-        console.log('Socket disconnected');
-    });
-});
-
-
 app.use(express.static('./public'));
 
 app.get('/client-main', loggedIn, async(req, res) => { 
-    const clientEmail = req.session.Cemail;
-    try {
-        const matchedPosts = await db.getClientMatchedPosts(clientEmail);
-        res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname, matchedPosts}); // Render client main
-    } catch (error) {
-        console.error('Error fetching matched posts:', error);
-        res.status(500).send('An error occurred');
-    }
+    res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname, userType: req.cookies.userType}); // Render client main
 });
 
 app.get('/loan-provider-main', loggedIn, (req, res) => { 
-    res.render('loan-provider-main', { email: req.session.Lemail, Fname:req.session.Fname, Lname:req.session.Lname}); // Render loan provider main
+    res.render('loan-provider-main', { email: req.session.Lemail, Fname:req.session.Fname, Lname:req.session.Lname,userType: req.cookies.userType}); // Render loan provider main
 });
 
+app.get('/client/getPosts' ,async (req, res) => {
+    const clientEmail = req.cookies.email;
+    try {
+        const posts = await db.getClientPosts(clientEmail); 
+        
+        res.json({ success: true, posts: posts });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/loanProvider/getPosts' ,async (req, res) => {
+    const loanProviderEmail = req.cookies.email;
+    try {
+        const posts = await db.getLoanProviderPosts(loanProviderEmail); 
+        
+        res.json({ success: true, posts: posts });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/client/getMatchedPosts' ,async (req, res) => {
+    const clientEmail = req.cookies.email;
+    try {
+        await db.matchPosts();
+        const posts = await db.getClientMatchedPosts(clientEmail);
+        
+        res.json({ success: true, posts: posts });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/loanProvider/getMatchedPosts' ,async (req, res) => {
+    const loanProviderEmail = req.cookies.email;
+    try {
+        await db.matchPosts();
+        const posts = await db.getLoanProviderMatchedPosts(loanProviderEmail);
+        
+        res.json({ success: true, posts: posts });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/acceptPost', async (req, res) => {
+    const { M_ID, Email,userType } = req.body;
+
+    try {
+        const result = await db.acceptMatch(M_ID, Email,userType);
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error:', error);
+        res.json({ status: 'error', message: 'An error occurred while processing your request' });
+    }
+});
+
+app.post('/declinePost', async (req, res) => {
+    const { M_ID } = req.body;
+
+    try {
+        const result = await db.declineMatch(M_ID);
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error:', error);
+        res.json({ status: 'error', message: 'An error occurred while processing your request' });
+    }
+});
+
+app.post('/client/deletePost', async (req, res) => {
+    const { P_ID } = req.body;
+
+    try {
+        const result = await db.deleteClientPost(P_ID);
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error:', error);
+        res.json({ status: 'error', message: 'An error occurred while processing your request' });
+    }
+})
+
+app.post('/loanProvider/deletePost', async (req, res) => {
+    const { O_ID } = req.body;
+
+    try {
+        const result = await db.deleteLoanProviderPost(O_ID);
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error:', error);
+        res.json({ status: 'error', message: 'An error occurred while processing your request' });
+    }
+})
 
 
 // Integrate the routers
@@ -123,3 +188,4 @@ server.listen(PORT, () => {
     const link = `http://localhost:${PORT}`;
     console.log(`Server is running on ${link}`);
 });
+

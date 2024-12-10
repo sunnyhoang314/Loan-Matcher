@@ -38,7 +38,7 @@ router.post(
                 throw new Error('Maximum Term Length End Date must be later than Minimum Term Length Start Date');
             }
             return true;
-        }).withMessage('Minimum Term Length End Date must be later than Minimum Term Length Start Date'),
+        }).withMessage('Maximum Term Length End Date must be later than Maximum Term Length Start Date'),
         check("description").notEmpty().withMessage("Description is required"),
         check("category").isIn(["finance", "real-estate", "business", "other"]).withMessage("Invalid category selected"),
         check("max-amount").isInt({ min: 1 }).withMessage("Maximum loan amount must be greater than 0"),
@@ -52,7 +52,7 @@ router.post(
             });
         }
 
-        const {
+        const post = {
             title,
             "max-rate": maxRate,
             "min-start-date": minStartDate,
@@ -64,7 +64,7 @@ router.post(
             "max-amount": maxAmount,
         } = req.body;
 
-        Cemail = req.session.email;
+        Cemail = req.cookies.email;
         try {
             const result = await db.createLoanPost({
                 title,

@@ -82,7 +82,7 @@
                 <option value="other">Other</option>
             </select>
             
-            <label for="post-max-amount">Maximum Loan Amount ($):</label>
+            <label for="post-max-amount">Desired Loan Amount ($):</label>
             <input type="number" id="post-max-amount" name="max-amount" required>
     
             <button type="submit">Submit</button>
@@ -112,9 +112,9 @@
     <footer>&copy; 2024 Loan Matcher. All rights reserved.</footer>
     <!-- Pass matchedPosts as a global variable -->
     <script>
-        matchedPosts = JSON.parse('<%- JSON.stringify(matchedPosts) %>');
+        email = JSON.parse('<%- JSON.stringify(email) %>');
+        userType = JSON.parse('<%- JSON.stringify(userType) %>');
     </script>
     <script src="/script.js" onerror="this.onerror=null;this.src='../public/script.js';"></script>
-    <script src="/event/createPostEvent.js"></script>
 </body>
 </html>
