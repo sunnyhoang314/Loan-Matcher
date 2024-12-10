@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function () {
     links.forEach(function (link) {
         link.addEventListener('click', function (event) {
             // Prevent fade-out on tab buttons
-            if (link.id === 'settings-button' || link.id === 'create-post-link' || link.id === 'matched-post-link' || link.id === 'accepted-post-link') {
+            if (link.id === 'settings-button' || link.id === 'my-post-link' || link.id === 'create-post-link' || link.id === 'matched-post-link' || link.id === 'accepted-post-link') {
                 return; // Do nothing for settings
             }
 
@@ -127,6 +127,7 @@ createPostLink.addEventListener('click', (e) => {
     createPostPopup.style.display = 'block';
     closeMatchedPostPopup();
     closeAcceptedPostPopup();
+    closeMyPostPopup();
     console.log("Popup display set to block");});
 
 // Hide the popup when clicking "Cancel"
@@ -159,11 +160,16 @@ function closeAcceptedPostPopup() {
     acceptedPostPopup.style.display = 'none';
 }
 
+function closeMyPostPopup() {
+    myPostPopup.style.display = 'none';
+}
+
 // Event listener for Matched Posts button
 matchedPostLink.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent default link behavior
     closeCreatePostPopup(); // Close the Create Post popup
     closeAcceptedPostPopup();
+    closeMyPostPopup();
     matchedPostPopup.style.display = 'block';
 });
 
@@ -172,6 +178,7 @@ acceptedPostLink.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent default link behavior
     closeCreatePostPopup(); // Close the Create Post popup
     closeMatchedPostPopup();
+    closeMyPostPopup();
     acceptedPostPopup.style.display = 'block';
     console.log('Accepted Posts tab opened'); // Debug log
     // Add logic to show Accepted Posts tab content
@@ -375,3 +382,80 @@ document.getElementById('accepted-post-link').addEventListener('click', () => {
 function viewContact(email, phone) {
     alert(`Contact Information:\nEmail: ${email}\nPhone: ${phone}`);
 }
+
+// Array to store posts
+let myPosts = [];
+
+// Capture form submission
+const postForm = document.getElementById('post-form');
+postForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // Get form data
+    const post = {
+        title: document.getElementById('title').value,
+        maxRate: document.getElementById('max-rate').value,
+        minStartDate: document.getElementById('min-start-date').value,
+        minEndDate: document.getElementById('min-end-date').value,
+        maxStartDate: document.getElementById('max-start-date').value,
+        maxEndDate: document.getElementById('max-end-date').value,
+        description: document.getElementById('post-description').value,
+        category: document.getElementById('post-category').value,
+        maxAmount: document.getElementById('post-max-amount').value,
+    };
+
+    // Add post to myPosts array
+    myPosts.push(post);
+
+    // Clear the form
+    postForm.reset();
+
+    // Hide the "Create Post" popup
+    document.getElementById('create-post-popup').style.display = 'none';
+
+    // Update "My Posts" popup
+    updateMyPosts();
+});
+
+// Function to update "My Posts" popup
+function updateMyPosts() {
+    const myPostContainer = document.getElementById('my-posts-container');
+    myPostContainer.innerHTML = ''; // Clear existing posts
+
+    myPosts.forEach((post, index) => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post';
+
+        postDiv.innerHTML = `
+            <h3>${post.title}</h3>
+            <p><strong>Interest Rate:</strong> ${post.maxRate}%</p>
+            <p><strong>Term Length:</strong> ${post.minStartDate} to ${post.minEndDate} (min), ${post.maxStartDate} to ${post.maxEndDate} (max)</p>
+            <p><strong>Description:</strong> ${post.description}</p>
+            <p><strong>Category:</strong> ${post.category}</p>
+            <p><strong>Maximum Loan Amount:</strong> $${post.maxAmount}</p>
+            <button onclick="deletePost(${index})">Delete</button>
+        `;
+
+        myPostContainer.appendChild(postDiv);
+    });
+}
+
+// Function to delete a post
+function deletePost(index) {
+    myPosts.splice(index, 1);
+    updateMyPosts();
+}
+
+// Show/Hide "My Post" Popup
+const myPostLink = document.getElementById('my-post-link');
+const myPostPopup = document.getElementById('my-post-popup');
+const closeMyPostsButton = document.getElementById('close-my-posts');
+
+myPostLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    myPostPopup.style.display = 'block';
+    closeAcceptedPostPopup();
+    closeCreatePostPopup();
+    closeMatchedPostPopup();
+});
+

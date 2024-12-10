@@ -426,7 +426,8 @@ li {
 }
 
 .matched-post-popup,
-.accepted-post-popup {
+.accepted-post-popup,
+.my-post-popup {
     position: fixed;
     top: 550px; /* Adjust to leave space for the top navigation bar */
     left: 50%;
@@ -476,7 +477,8 @@ li {
 
 /* Posts container styling */
 .matched-posts-container, 
-.accepted-posts-container {
+.accepted-posts-container,
+.my-post-container {
     max-height: 600px; /* Adjust based on your design */
     overflow-y: auto; /* Enable vertical scrolling */
     border: 1px solid #ccc;
