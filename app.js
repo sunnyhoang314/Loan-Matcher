@@ -57,11 +57,11 @@ app.get('/client-main', loggedIn, async(req, res) => {
     const clientEmail = req.session.Cemail;
     try {
         const matchedPosts = await db.getClientMatchedPosts(clientEmail);
+        res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname, matchedPosts}); // Render client main
     } catch (error) {
         console.error('Error fetching matched posts:', error);
         res.status(500).send('An error occurred');
     }
-    res.render('client-main', { email: req.session.Cemail, Fname:req.session.Fname, Lname:req.session.Lname, matchedPosts}); // Render client main
 });
 
 app.get('/loan-provider-main', loggedIn, (req, res) => { 
