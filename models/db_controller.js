@@ -192,23 +192,4 @@ module.exports.createLoanOffer = async (post) => {
     }
 };
 
-module.exports.getClientMatchedPosts = async (email) => {
-    const query = `
-        SELECT 
-            lp.PTitle AS Ptitle,
-            lo.OName AS OName,
-            CONCAT(lo.MinTermStart, ' to ', lo.MinTermEnd) AS mintermlength,
-            CONCAT(lo.MaxTermStart, ' to ', lo.MaxTermEnd) AS maxtermlength,
-            lo.Description AS description,
-            lo.Max_amt AS maxLoanAmount,
-            lo.MinRate AS minInterestRate,
-            lo.LType AS category,
-            lp.CEmail AS contactEmail
-        FROM matched_post mp
-        JOIN loan_post lp ON mp.P_ID = lp.P_ID
-        JOIN loan_offer lo ON mp.O_ID = lo.O_ID
-        WHERE lp.CEmail = ?
-    `;
-    const [rows] = await con.promise().query(query, [email]);
-    return rows;
-};
+

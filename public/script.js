@@ -248,16 +248,16 @@ function renderMatchedPosts() {
             const postElement = document.createElement('div');
             postElement.classList.add('post');
             postElement.innerHTML = `
-                <h3>${post.title}</h3>
-                <p><strong>Minimum Interest Rate: </strong>${post.mininterestrate}%</p>
-                <p><strong>Minimum Term Length: </strong>${post.mintermlength}</p>
-                <p><strong>Maximum Term Length: </strong>${post.maxtermlength}</p>
+                <h3>Loan Offer: ${post.Oname} - Loan Post: ${post.Ptitle}</h3>
+                <p><strong>Minimum Interest Rate: </strong>${post.minInterestRate}%</p>
+                <p><strong>Minimum Term Length: </strong>${post.minTermLength}</p>
+                <p><strong>Maximum Term Length: </strong>${post.maxTermLength}</p>
                 <p>${post.description}</p>
                 <p><strong>Category: </strong>${post.category}</p>
-                <p><strong>Minimum Loan Amount: </strong>$${post.minloanamount}</p>
+                <p><strong>Maximum Loan Amount: </strong>$${post.maxLoanAmount}</p>
                 <div class="post-actions">
-                    <button class="accept-button" data-index="${index}">Accept</button>
-                    <button class="decline-button" data-index="${index}">Decline</button>
+                    <button class="accept-button" data-index="${index},${matchedPost.M_ID}">Accept</button>
+                    <button class="decline-button" data-index="${index},${matchedPost.M_ID}">Decline</button>
                 </div>
             `;
             matchedPostsContainer.appendChild(postElement);
@@ -268,21 +268,50 @@ function renderMatchedPosts() {
         const declineButtons = document.querySelectorAll('.decline-button');
 
         acceptButtons.forEach(button => {
-            button.addEventListener('click', (e) => handleAccept(e.target.dataset.index));
+            button.addEventListener('click', (e) => {
+                const [index, matchedPostID] = e.target.dataset.index.split(',');
+                handleAccept(index, matchedPostID);
+            });
         });
-
+    
         declineButtons.forEach(button => {
-            button.addEventListener('click', (e) => handleDecline(e.target.dataset.index));
+            button.addEventListener('click', (e) => {
+                const [index,matchedPostID] = e.target.dataset.index.split(',');
+                handleDecline(index, matchedPostID);
+            });
         });
     }
 }
 
-function handleAccept(index) {
-    const post = posts[index];
+function handleAccept(index, matchedPostID) {
+    $.ajax({
+        type: 'POST',
+        url: '/acceptPost',
+        data: {
+            M_ID: matchedPostID,
+            Email: email
+        },
+        success: function(response) {
+            if (response.status === "success") {
+                alert(response.message);
+                handleAcceptUI(index);
+                
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function(error) {
+            console.error("Error accepting post:", error);
+        }
+    });
+}
+
+function handleAcceptUI(index) {
+    const post = matchedPosts[index];
 
     // Mark the post as accepted
-    post.accepted = true;
-    post.matched = false;  // Remove it from the matched list
+    //post.accepted = true;
+    //post.matched = false;  // Remove it from the matched list
 
     // Log which post is accepted
     console.log(`Accepting post at index: ${index}, Post Title: ${post.title}`);
@@ -291,7 +320,7 @@ function handleAccept(index) {
     acceptedPosts.push(post);
 
     // Remove the accepted post from the array
-    posts.splice(index, 1);  // This removes the post at the given index
+    //posts.splice(index, 1);  // This removes the post at the given index
 
     // Refresh matched and accepted posts
     renderMatchedPosts();
@@ -299,11 +328,33 @@ function handleAccept(index) {
 }
 
 
-function handleDecline(index) {
-    const post = posts[index];
-    post.accepted = false;  // Keep as not accepted
-    post.matched = false;  // Remove from the matched section
-    posts.splice(index, 1);  // This removes the post at the given index
+function handleAccept(index, matchedPostID) {
+    $.ajax({
+        type: 'POST',
+        url: '/declinePost',
+        data: {
+            M_ID: matchedPostID,
+            Email: email
+        },
+        success: function(response) {
+            if (response.status === "success") {
+                alert(response.message);
+                handleDeclineUI(index);
+                
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function(error) {
+            console.error("Error accepting post:", error);
+        }
+    });
+}
+
+function handleDeclineUI(index) {
+    //post.accepted = false;  // Keep as not accepted
+    //post.matched = false;  // Remove from the matched section
+    //posts.splice(index, 1);  // This removes the post at the given index
     alert(`You declined the post: ${post.title}`);
     renderMatchedPosts();  // Refresh matched posts
 }
@@ -347,9 +398,9 @@ function renderAcceptedPosts() {
                 <p><strong>Category: </strong>${post.category}</p>
                 <p><strong>Minimum Loan Amount: </strong>$${post.minloanamount}</p>
                 <div class="post-actions">
-                    ${post.posterAccepted
+                    ${post.status == 'Accepted'
                         ? `<button class="view-contact-button" onclick="viewContact('${post.contactInfo.email}', '${post.contactInfo.phone}')">View Contact Information</button>`
-                        : '<p>Acceptance Pending</p>'
+                        : `<p>Acceptance: ${post.status}</p>`
                     }
                 </div>
             `;

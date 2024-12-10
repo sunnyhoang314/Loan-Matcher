@@ -89,12 +89,14 @@ CREATE TABLE LOAN_OFFER
 -- Create the MATCHED_POST table
 CREATE TABLE MATCHED_POST
     (
-        M_ID            INT            NOT NULL,
+        M_ID            INt AUTO_INCREMENT    NOT NULL,
         MRate           INT,
         MDate           DATE,
         MStatus         VARCHAR(255),
         P_ID            INT,            
         O_ID            INT,          
+        CDecision       BOOLEAN,
+        LDecision       BOOLEAN,
         CEmail          VARCHAR(50),         
         LEmail          VARCHAR(50),         
         CONSTRAINT MPPK PRIMARY KEY(M_ID),

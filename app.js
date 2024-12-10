@@ -5,6 +5,7 @@ var path = require('path');//Imports Node.js's built-in module for working with 
 var ejs = require('ejs');//Imports the EJS templating engine, which lets you write HTML pages with embedded JavaScript for dynamic content (like displaying a user’s name).
 var bodyParser = require('body-parser');//Imports Body Parser, a middleware for parsing incoming data (e.g., form submissions or JSON payloads) so your app can work with it.
 const http = require('http');//Imports Node.js's built-in HTTP module to create and manage web servers.
+const WebSocket = require('ws'); // WebSocket package for server-client communication
 
 var db = require('./models/db_controller');
 //Imports the route controllers
@@ -49,6 +50,29 @@ app.use(
     })
 );
 
+// WebSocket setup
+const wss = new WebSocket.Server({ server });
+console.log('WebSocket server created. Waiting for connections...');
+// Handle incoming WebSocket connections
+wss.on('connection', (wsInstance) => {
+    console.log('Socket connected');
+
+    // Listen for messages from the client
+    wsInstance.on('message', (message) => {
+        console.log('Message from socket:', message);
+        
+        // Broadcast message to all other clients
+        wss.clients.forEach(client => {
+            if (client !== wsInstance && client.readyState === WebSocket.OPEN) {
+                client.send(message);
+            }
+        });
+    });
+
+    wsInstance.on('close', () => {
+        console.log('Socket disconnected');
+    });
+});
 
 
 app.use(express.static('./public'));
