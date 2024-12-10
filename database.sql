@@ -17,7 +17,6 @@ CREATE TABLE CLIENT
         CPhone             CHAR(20)            ,            
         Financial_details  VARCHAR(255)        ,
         CONSTRAINT CPK PRIMARY KEY(CEmail),
-        CONSTRAINT CPW CHECK(LENGTH(CPassword) >= 8)
     );
 
 -- Create the LOAN_PROVIDER table
@@ -26,13 +25,11 @@ CREATE TABLE LOAN_PROVIDER
         LEmail             VARCHAR(50)         NOT NULL,
         Fname              VARCHAR(15)         NOT NULL,
         Lname              VARCHAR(15)         NOT NULL,
-        Terms              VARCHAR(255)        ,
         LPassword          VARCHAR(255)        NOT NULL,
         LLocation          VARCHAR(255)        ,
         LPhone             CHAR(20)            ,
         LicenseNo          CHAR(10)            ,
         CONSTRAINT LPK PRIMARY KEY(LEmail),
-        CONSTRAINT LPW CHECK(LENGTH(LPassword) >= 8)
     );
 
 -- Create the ADMIN table

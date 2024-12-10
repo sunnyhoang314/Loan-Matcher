@@ -334,11 +334,22 @@ document.getElementById('matched-post-link').addEventListener('click', () => {
 const acceptedPosts = [];  // Store accepted posts here
 
 function renderAcceptedPosts() {
+    // Add console.log for debugging
+    console.log('Rendering accepted posts. Current length:', acceptedPosts.length);
+
     const acceptedPostsContainer = document.getElementById('accepted-posts-container');
+    
+    // Additional null check
+    if (!acceptedPostsContainer) {
+        console.error('Could not find accepted-posts-container element');
+        return;
+    }
+
     acceptedPostsContainer.innerHTML = ''; // Clear the container
 
     // Check if there are any accepted posts
     if (acceptedPosts.length === 0) {
+        console.log('No accepted posts, setting empty message');
         acceptedPostsContainer.innerHTML = '<h2>You don\'t have any accepted posts.</h2>';
     } else {
         // Iterate through acceptedPosts and create post elements
@@ -364,6 +375,9 @@ function renderAcceptedPosts() {
         });
     }
 }
+
+// Ensure the function is called when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', renderAcceptedPosts);
 
 document.getElementById('accepted-post-link').addEventListener('click', () => {
     // Hide other tabs
