@@ -12,7 +12,8 @@ Create a .env file with:
     DB_PASSWORD=your_mysql_password
 ```
 
-4. Start the Development Server
+4. Import the Database and Start the Development Server
+create all the tables for the database using the sql statements in database.sql then
 Start the server with nodemon for auto-restarts: `npm run dev`
 
 5. How to Add More Routes
@@ -28,6 +29,7 @@ app.use('/signup', signup);
 7. Basic Project Structure
 
 Place your static files (HTML, CSS, JS, images) in the public folder.
+Place your dynamic files (EJS) in the view folder
 
 ```
 /controllers
@@ -36,6 +38,8 @@ Place your static files (HTML, CSS, JS, images) in the public folder.
   └── db_controller.js
 /public
   └── frontend.html 
+/view
+  └── frontend.ejs 
 .env
 app.js
 package.json

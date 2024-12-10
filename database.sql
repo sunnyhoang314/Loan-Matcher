@@ -57,7 +57,7 @@ CREATE TABLE LOAN_POST
         LType              VARCHAR(255)        NOT NULL,
         Desired_amt        VARCHAR(255)        NOT NULL,
         CEmail             VARCHAR(50),
-        M_ID               CHAR(10),          
+        M_ID               INT,          
         CONSTRAINT LPPK PRIMARY KEY(P_ID),
         CONSTRAINT LPFK FOREIGN KEY(CEmail) REFERENCES CLIENT(CEmail) ON DELETE RESTRICT ON UPDATE CASCADE
     );
@@ -78,7 +78,7 @@ CREATE TABLE LOAN_OFFER
         Min_amt            VARCHAR(255)        NOT NULL,
         Max_amt            VARCHAR(255)        NOT NULL,
         LEmail             VARCHAR(50),
-        M_ID               CHAR(10),
+        M_ID               INT,
         CONSTRAINT LOPK PRIMARY KEY(O_ID),
         CONSTRAINT LOFK FOREIGN KEY(LEmail) REFERENCES LOAN_PROVIDER(LEmail) ON DELETE RESTRICT ON UPDATE CASCADE
     );
