@@ -266,7 +266,7 @@ async function renderMatchedPosts () {
                 <p><strong>Minimum Interest Rate: </strong>${post.minInterestRate}%</p>
                 <p><strong>Minimum Term Length: </strong>${post.minTermLength}</p>
                 <p><strong>Maximum Term Length: </strong>${post.maxTermLength}</p>
-                <p>${post.description}</p>
+                <p><strong>Description: </strong>${post.description}</p>
                 <p><strong>Category: </strong>${post.category}</p>
                 <p><strong>Maximum Loan Amount: </strong>$${post.maxLoanAmount}</p>
                 ${!post.CDecision  ? 

@@ -16,7 +16,7 @@ CREATE TABLE CLIENT
         DOB_Establishment  DATE                ,
         CPhone             CHAR(20)            ,            
         Financial_details  VARCHAR(255)        ,
-        CONSTRAINT CPK PRIMARY KEY(CEmail),
+        CONSTRAINT CPK PRIMARY KEY(CEmail)
     );
 
 -- Create the LOAN_PROVIDER table
@@ -29,7 +29,7 @@ CREATE TABLE LOAN_PROVIDER
         LLocation          VARCHAR(255)        ,
         LPhone             CHAR(20)            ,
         LicenseNo          CHAR(10)            ,
-        CONSTRAINT LPK PRIMARY KEY(LEmail),
+        CONSTRAINT LPK PRIMARY KEY(LEmail)
     );
 
 -- Create the ADMIN table
