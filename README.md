@@ -50,6 +50,9 @@ README.md
 Run npm install if dependencies are missing.
 Check MySQL server status if connection fails.
 
+9. Import MySQL tables
+In your MySQL workbench, import the CLIENT, LOAN_OFFER, LOAN_POST, LOAN_PROVIDER, amd MATCHED_POST tables.
+
 
 ## Code References:
 Code related to setting up using Node.js and Express was referenced from the following YouTube tutorial:
