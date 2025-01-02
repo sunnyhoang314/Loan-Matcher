@@ -1,4 +1,11 @@
-## Loan Matcher Project Setup Guide
+## Loan Matcher 
+Loan Matcher is a website application that seeks to help people connect that are looking to get a loan for various purposes with loan provideers such as banks or companies that give out loans. The connection system is similar to that of popular matching apps such as Tinder, where both parties have to mutually accept each other in order to make a connection and establish communcation.
+
+## Video Demonstration
+(Please excuse the terrible audio quality. Github only supports files up to 10 MB and I had to compress it)
+https://github.com/user-attachments/assets/66ae2640-0c93-477a-b9b7-f0d19cbfeae1
+
+## Project Setup Guide
 
 1. Make sure Node.js and MySQL and MySQL Workbench or XAMPP is installed
 
@@ -49,10 +56,6 @@ README.md
 8. Troubleshooting
 Run npm install if dependencies are missing.
 Check MySQL server status if connection fails.
-
-9. Import MySQL tables
-In your MySQL workbench, import the CLIENT, LOAN_OFFER, LOAN_POST, LOAN_PROVIDER, amd MATCHED_POST tables.
-
 
 ## Code References:
 Code related to setting up using Node.js and Express was referenced from the following YouTube tutorial:
