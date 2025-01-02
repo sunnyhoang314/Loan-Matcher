@@ -3,7 +3,9 @@ Loan Matcher is a website application that seeks to help people connect that are
 
 ## Video Demonstration
 (Please excuse the terrible audio quality. Github only supports files up to 10 MB and I had to compress it)
-https://github.com/user-attachments/assets/66ae2640-0c93-477a-b9b7-f0d19cbfeae1
+
+https://github.com/user-attachments/assets/d273ba84-d3ca-43bc-b353-5251f3c14fa5
+
 
 ## Project Setup Guide
 
